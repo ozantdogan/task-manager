@@ -1,11 +1,11 @@
-import configparser
-
-config = configparser.ConfigParser()
-config.read('config.ini')
-
+from configparser import ConfigParser
+from getpass import getpass
 import psycopg2
 import os
 import time
+
+config = ConfigParser()
+config.read('config.ini')
 
 #Database configuration information
 #
@@ -37,7 +37,7 @@ while True:
         print("Please enter the database configuration:")
         DB_NAME = input("Database name: ")
         DB_USER = input("Database user: ")
-        DB_PASSWORD = input("Database password: ")
+        DB_PASSWORD = getpass("Database password: ")
         DB_HOST = input("Database host: ")
         DB_PORT = input("Database port: ")
         config.set('database', 'name', DB_NAME)
