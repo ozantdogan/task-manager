@@ -2,8 +2,21 @@ from sqlalchemy import create_engine, asc, desc, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models import Task
+<<<<<<< Updated upstream
 from config import *
+=======
+from app_settings import *
+from db_settings import connect_db, db_values
+>>>>>>> Stashed changes
 import messages
+
+connect_db()
+
+DB_USER = db_values.get('db_user')
+DB_PASSWORD = db_values.get('db_password')
+DB_HOST = db_values.get('db_host')
+DB_PORT = db_values.get('db_port')
+DB_NAME = db_values.get('db_name')
 
 engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
 Base = declarative_base()
@@ -124,7 +137,8 @@ class TaskManager:
     def delete_task(self, task_index):
         try:
             if task_index == "-a":
-                confirm = input(messages.CONFIRM_DELETE_ALL_TASKS_MESSAGE)
+                print(messages.CONFIRM_DELETE_ALL_TASKS_MESSAGE)
+                confirm = input()
                 if confirm.lower() == "y":
                     session.query(Task).delete()
                     session.commit()
