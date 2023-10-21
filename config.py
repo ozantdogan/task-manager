@@ -8,8 +8,8 @@ DB_PORT = "YOUR_DB_PORT"
 
 #Completed task status
 #
-COMPLETED = '🟩'
-NOT_COMPLETED = '⬛'
+COMPLETED = '☑️'
+NOT_COMPLETED = '🔳'
 
 #Commands
 #
