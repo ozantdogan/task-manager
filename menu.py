@@ -4,10 +4,7 @@ import messages
 
 def show_menu(task_manager):
     os.system("cls")
-    for line in messages.WELCOME_MESSAGE.splitlines():
-        print(line)
-        time.sleep(0.1)
-    ##print(messages.WELCOME_MESSAGE)
+    messages.welcome_message()
     time.sleep(1.5)
 
     while True:
@@ -22,36 +19,60 @@ def show_menu(task_manager):
                 print(messages.EDIT_TASK)
                 print(messages.MARK_TASK)
                 print(messages.DELETE_TASK)
-                print(messages.CHANGE_TASK)
-            print(messages.QUIT_PROGRAM)
+            if(task_count > 1):
+                print(messages.SORT_TASKS)
+            print(messages.EXIT_PROGRAM)
 
             choice = input()
 
+            ##Create a task
             if choice == "1":
-                title = input(messages.ENTER_TASK_TITLE_MESSAGE)
-                description = input(messages.ENTER_TASK_DESCRIPTION_MESSAGE)
+                print(messages.ENTER_TASK_TITLE_MESSAGE)
+                title = input()
+
+                print(messages.ENTER_TASK_DESCRIPTION_MESSAGE)
+                description = input()
+
                 task_manager.add_task(title, description)
+
+            ##Edit a task
             elif choice == "2" and task_count > 0:
-                task_index = int(input(messages.ENTER_EDIT_TASK_MESSAGE))
+                print(messages.ENTER_EDIT_TASK_MESSAGE)
+                task_index = int(input())
                 task_manager.edit_task(task_index)
+
+            ##Mark a task
             elif choice == "3" and task_count > 0:
-                task_index = input(messages.ENTER_MARK_TASK_MESSAGE)
+                print(messages.ENTER_MARK_TASK_MESSAGE)
+                task_index = input()
                 task_manager.mark_task(task_index)
+
+            ##Delete a task
             elif choice == "4" and task_count > 0:
-                task_index = input(messages.ENTER_DELETE_TASK_MESSAGE)
+                print(messages.ENTER_DELETE_TASK_MESSAGE)
+                task_index = input()
                 task_manager.delete_task(task_index)
+
+            ##Sort tasks
             elif choice == "5" and task_count > 1:
-                print(messages.SORT_TASKS)
-                index = int(input(messages.ENTER_SORT_TASKS_MESSAGE))
+                print(messages.SORT_TASKS_OPTIONS)
+                print(messages.ENTER_SORT_TASKS_MESSAGE)
+                index = int(input())
                 task_manager.sort_tasks(index)
+            
+            ##Exit program
             elif choice == "0":
-                print(messages.QUIT_MESSAGE)
+                print(messages.EXIT_PROGRAM_MESSAGE)
                 time.sleep(0.5)
                 os.system("cls")
                 exit()
+
             else:
                 print(messages.INVALID_CHOICE_MESSAGE)
-            input("Press Enter to continue...")
+            print(messages.PRESS_ENTER_MESSAGE)
+            input()
+
         except ValueError as e:
             print(messages.ERROR_MESSAGE, e)
-            input("Press Enter to continue...")
+            print(messages.PRESS_ENTER_MESSAGE)
+            input()
