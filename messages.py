@@ -1,4 +1,19 @@
-from config import CLEAR, ALL
+from app_settings import CLEAR, ALL, colors, styles
+import time
+from colorama import init
+
+init(autoreset=True)
+
+welcome_message_color = colors.get('welcome_message_color')
+input_selection_color = colors.get('input_selection_color')
+exit_program_color = colors.get('exit_program_color')
+input_messages_color = colors.get('input_messages_color')
+task_messages_color = colors.get('task_messages_color')
+program_messages_color = colors.get('program_messages_color')
+error_color = colors.get('error_color')
+
+program_messages_style = styles.get('program_messages_style')
+
 
 ##intro
 
@@ -13,6 +28,8 @@ def welcome_message():
     for line in message.splitlines():
         print(welcome_message_color + line)
         time.sleep(0.025)
+
+
 
 ## menu 
 EXIT_PROGRAM    = exit_program_color    + "0. Exit"
@@ -35,6 +52,14 @@ TASK_TITLE_ERROR = "🚫 Task title cannot be empty."
 TASK_NOT_FOUND_ERROR = "🚫 Invalid task index. Task not found."
 INVALID_CHOICE_MESSAGE = "Invalid choice. Please select a valid option."
 
+## database
+ENTER_DATABASE_CONFIGURATION    = input_selection_color + "Enter the database configuration"
+ENTER_DATABASE_NAME             = input_selection_color + "Database name: "
+ENTER_DATABASE_USER             = input_selection_color + "Database user: "
+ENTER_DATABASE_PASSWORD         = input_selection_color + "Database password: "
+ENTER_DATABASE_HOST             = input_selection_color + "Database host: "
+ENTER_DATABASE_PORT             = input_selection_color + "Database port: "
+
 ## input messages
 ENTER_TASK_TITLE_MESSAGE            = input_messages_color + "Enter task title (cannot be null): "
 ENTER_TASK_DESCRIPTION_MESSAGE      = input_messages_color + "Enter task description: "
@@ -47,22 +72,6 @@ CONFIRM_DELETE_ALL_TASKS_MESSAGE    = input_messages_color + "Are you sure you w
 ENTER_SORT_TASKS_MESSAGE            = input_messages_color + "Enter sort option: "
 
 ## task messages
-<<<<<<< Updated upstream
-TASK_ADDED_MESSAGE = "➕  Task '{title}' added."
-TASK_EDITED_MESSAGE = "✏️  Task '{title}' edited."
-TASK_MARKED_MESSAGE = "✔️  Task '{title}' marked as '{is_completed}'."
-ALL_TASKS_MARKED_COMPLETED_MESSAGE = "✔️  All tasks marked as completed."
-ALL_TASKS_MARKED_NOT_COMPLETED_MESSAGE = "✔️  All tasks marked as 'not completed'."
-TASK_DELETED_MESSAGE = "🗑️  Task '{deleted_task}' deleted."
-ALL_TASKS_DELETED_MESSAGE = "🗑️  All tasks deleted."
-TASK_INDEX_CHANGED_MESSAGE = "🔀  Task index changed from {old_index} to {new_index}."
-
-## program messages
-CONNECTED_TO_DATABASE_MESSAGE = "Connected to database successfully."
-NO_TASKS_FOUND_MESSAGE = "(No tasks found.)"
-QUIT_MESSAGE = "(Exiting the program...)"
-PRESS_ENTER_MESSAGE = "(Press enter to continue...)"
-=======
 TASK_ADDED_MESSAGE                      = task_messages_color + "➕ Task '{title}' added."
 TASK_EDITED_MESSAGE                     = task_messages_color + "✏️ Task '{title}' edited."
 TASK_MARKED_MESSAGE                     = task_messages_color + "✔️ Task '{title}' marked as '{is_completed}'."
@@ -75,7 +84,7 @@ TASKS_SORTED_MESSAGE                    = task_messages_color + "🔀 Task index
 ## program messages
 CONNECTED_TO_DATABASE_MESSAGE   = program_messages_color + "(Connected to database successfully.)"
 NO_TASKS_FOUND_MESSAGE          = program_messages_color + "(No tasks found.)"
-EXIT_PROGRAM_MESSAGE           = program_messages_color + "(Exiting the program...)"
+EXIT_PROGRAM_MESSAGE            = program_messages_color + "(Exiting the program...)"
 PRESS_ENTER_MESSAGE             = program_messages_color + "(Press enter to continue...)"
 TERMINATING_PROGRAM_MESSAGE     = program_messages_color + "(Terminating program...)"
 
@@ -110,11 +119,3 @@ INVALID_CHOICE_MESSAGE      = "Invalid choice. Please select a valid option."
 #     message = "Invalid choice. Please select a valid option."
 #     logging.info(f"Called invalid_choice_message function. Message: {message}")
 #     return message
->>>>>>> Stashed changes
-
-## error messages
-DATABASE_CONNECTION_ERROR = "Error connecting to database: {0}"
-ERROR_MESSAGE = "⚠️ An error occurred."
-TASK_TITLE_ERROR = "🚫 Task title cannot be empty."
-TASK_NOT_FOUND_ERROR = "🚫 Invalid task index. Task not found."
-INVALID_CHOICE_MESSAGE = "Invalid choice. Please select a valid option."
