@@ -137,11 +137,10 @@ class TaskManager:
                 task_id = self.task_db_ids.get(task_index)
                 if task_id:
                     task = session.query(Task).filter_by(id=task_id).first()
-                    if confirm.lower() == "y":
-                        session.delete(task)
-                        session.commit()
-                        del self.task_db_ids[task_index]
-                        print(messages.TASK_DELETED_MESSAGE.format(title=task.title))
+                    session.delete(task)
+                    session.commit()
+                    del self.task_db_ids[task_index]
+                    print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
                 else:
                     raise ValueError(messages.TASK_NOT_FOUND_ERROR)
             else:
