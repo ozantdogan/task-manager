@@ -19,7 +19,6 @@ def show_menu(task_manager):
 
             print(messages.CREATE_TASK)
             if(task_count > 0):
-                print()
                 print(messages.EDIT_TASK)
                 print(messages.MARK_TASK)
                 print(messages.DELETE_TASK)
