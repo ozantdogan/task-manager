@@ -22,14 +22,12 @@ class TaskManager:
     
     def list_tasks(self):
         tasks = session.query(Task).order_by(self.sort_order(self.sortby)).all()
-        if len(tasks) == 0:
         if not tasks:
             print(messages.NO_TASKS_FOUND_MESSAGE)
         else:
             self.task_db_ids = {index: task.id for index, task in enumerate(tasks, start=1)}
             for index, task in enumerate(tasks, start=1):
                 status = COMPLETED if task.is_completed else NOT_COMPLETED
-                print(f"{index}{status}  {task.title}: {task.description}")
                 description = f": {task.description}" if task.description.strip() else ""
                 print(f"{index}{status}  {task.title}{description}")
     
