@@ -33,7 +33,7 @@ while True:
     except Exception as e:
         os.system("cls")
         time.sleep(0.5)
-        print()
+        print("Error connecting to database.", e)
         print("Please enter the database configuration:")
         DB_NAME = input("Database name: ")
         DB_USER = input("Database user: ")
