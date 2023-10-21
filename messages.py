@@ -1,4 +1,6 @@
-from config import CLEAR, ALL
+from settings import CLEAR, ALL
+
+#TODO: logging ekle
 
 ##intro
 WELCOME_MESSAGE = """**TASK MANAGER**
@@ -21,11 +23,13 @@ SORT_TASKS = """Sort tasks by:
     4. Completion status
     """
 
-## error messages
-ERROR_MESSAGE = "⚠️ An error occurred."
-TASK_TITLE_ERROR = "🚫 Task title cannot be empty."
-TASK_NOT_FOUND_ERROR = "🚫 Invalid task index. Task not found."
-INVALID_CHOICE_MESSAGE = "Invalid choice. Please select a valid option."
+## database
+ENTER_DATABASE_CONFIGURATION = "Enter the database configuration:"
+ENTER_DATABASE_NAME = "Database name: "
+ENTER_DATABASE_USER = "Database user: "
+ENTER_DATABASE_PASSWORD = "Database password: "
+ENTER_DATABASE_HOST = "Database host: "
+ENTER_DATABASE_PORT = "Database port: "
 
 ## input messages
 ENTER_TASK_TITLE_MESSAGE = "Enter task title (cannot be null): "
@@ -44,11 +48,19 @@ TASK_EDITED_MESSAGE = "✏️  Task '{title}' edited."
 TASK_MARKED_MESSAGE = "✔️  Task '{title}' marked as '{is_completed}'."
 ALL_TASKS_MARKED_COMPLETED_MESSAGE = "✔️  All tasks marked as completed."
 ALL_TASKS_MARKED_NOT_COMPLETED_MESSAGE = "✔️  All tasks marked as 'not completed'."
-TASK_DELETED_MESSAGE = "🗑️  Task '{deleted_task.title}' deleted."
+TASK_DELETED_MESSAGE = "🗑️  Task '{deleted_task}' deleted."
 ALL_TASKS_DELETED_MESSAGE = "🗑️  All tasks deleted."
 TASK_INDEX_CHANGED_MESSAGE = "🔀  Task index changed from {old_index} to {new_index}."
 
 ## program messages
+CONNECTED_TO_DATABASE_MESSAGE = "Connected to database successfully."
 NO_TASKS_FOUND_MESSAGE = "(No tasks found.)"
 QUIT_MESSAGE = "(Exiting the program...)"
 PRESS_ENTER_MESSAGE = "(Press enter to continue...)"
+
+## error messages
+DATABASE_CONNECTION_ERROR = "Error connecting to database: {0}"
+ERROR_MESSAGE = "⚠️ An error occurred."
+TASK_TITLE_ERROR = "🚫 Task title cannot be empty."
+TASK_NOT_FOUND_ERROR = "🚫 Invalid task index. Task not found."
+INVALID_CHOICE_MESSAGE = "Invalid choice. Please select a valid option."

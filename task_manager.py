@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, asc, desc, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models import Task
-from config import *
+from settings import *
 import messages
 
 engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
