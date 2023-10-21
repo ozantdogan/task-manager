@@ -139,7 +139,6 @@ class TaskManager:
                 task_id = self.task_db_ids.get(task_index)
                 if task_id:
                     task = session.query(Task).filter_by(id=task_id).first()
-                    confirm = input(messages.CONFIRM_DELETE_TASK_MESSAGE.format(title=task.title))
                     if confirm.lower() == "y":
                         session.delete(task)
                         session.commit()
