@@ -9,7 +9,7 @@ def main():
         task_manager = TaskManager()
         show_menu(task_manager)
     except KeyboardInterrupt:
-        print(messages.QUIT_MESSAGE)
+        print(messages.EXIT_PROGRAM_MESSAGE)
         time.sleep(0.5)
         os.system("cls")
         exit()

@@ -2,12 +2,17 @@ from sqlalchemy import create_engine, asc, desc, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from models import Task
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 from config import *
 =======
 from app_settings import *
 from db_settings import connect_db, db_values
 >>>>>>> Stashed changes
+=======
+from app_settings import *
+from db_settings import connect_db, db_values
+>>>>>>> main
 import messages
 
 connect_db()
