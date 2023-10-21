@@ -12,8 +12,7 @@ CREATE_TASK = "1. Create new task"
 EDIT_TASK = "2. Edit task"
 MARK_TASK = "3. Mark task"
 DELETE_TASK = "4. Delete task"
-DELETE_ALL_TASKS = "5. Delete all tasks"
-CHANGE_TASK = "6. Sort tasks"
+CHANGE_TASK = "5. Sort tasks"
 
 SORT_TASKS = """Sort tasks by:
     1. Title
