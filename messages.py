@@ -52,7 +52,7 @@ SORT_TASKS_OPTIONS = task_messages_color + """Sort tasks by:
     """
 
 ## database
-ENTER_DATABASE_CONFIGURATION    = Text('Enter the database configurations (Ctrl+C to exit.)', color=input_selection_color)
+ENTER_DATABASE_CONFIGURATION    = Text('Enter the database configurations (Ctrl+C to exit.)', color=input_messages_color)
 ENTER_DATABASE_NAME             = Text('Database name: ', color=input_selection_color)
 ENTER_DATABASE_USER             = Text('Database user: ', color=input_selection_color)
 ENTER_DATABASE_PASSWORD         = Text('Database password: ', color=input_selection_color)
@@ -81,11 +81,11 @@ ALL_TASKS_DELETED_MESSAGE               = task_messages_color + "🗑️ All tas
 TASKS_SORTED_MESSAGE                    = task_messages_color + "🔀 Task index changed from {old_index} to {new_index}."
 
 ## program messages
-CONNECTED_TO_DATABASE_MESSAGE   = program_messages_color + "(Connected to database successfully.)"
-NO_TASKS_FOUND_MESSAGE          = program_messages_color + "(No tasks found.)"
-DISCONNECT_MESSAGE              = program_messages_color + "(Disconnected from database.)"
-PRESS_ENTER_MESSAGE             = program_messages_color + "(Press enter to continue...)"
-TERMINATING_PROGRAM_MESSAGE     = program_messages_color + "(Exiting the program...)"
+CONNECTED_TO_DATABASE_MESSAGE   = Text("(Connected to the database successfully.)", color=program_messages_color).italic()
+NO_TASKS_FOUND_MESSAGE          = Text("(No tasks found.)", color=program_messages_color).italic()
+DISCONNECT_MESSAGE              = Text("(Disconnected from the database.)", color=program_messages_color).italic()
+PRESS_ENTER_MESSAGE             = Text("(Press enter to continue...)", color=program_messages_color).italic()
+TERMINATING_PROGRAM_MESSAGE     = Text("(Exiting the program...)", color=program_messages_color).bold_italic()
 
 ## error messages
 DATABASE_CONNECTION_ERROR   = Text('⚠️ Error connecting to database: ', color=error_color).bold()
