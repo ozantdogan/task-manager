@@ -1,4 +1,4 @@
-from app_settings import CLEAR, ALL, colors, styles
+from app_settings import Text, CLEAR, ALL, colors, styles
 import time
 from colorama import init
 
@@ -35,13 +35,13 @@ def welcome_message():
 ## menu
 TASK_MANAGER_TITLE      = task_manager_title_color + '{DB_NAME}' + '\n'
 SEPARATOR_LINE          = '--------------------------------------\n'
-EXIT_PROGRAM            = exit_program_color    + "Ctrl+C to exit" 
-DISCONNECT_PROGRAM      = exit_program_color    + "0: Disconnect"
-CREATE_TASK             = input_selection_color + "1: Create new task"
-EDIT_TASK               = input_selection_color + "2: Edit task"
-MARK_TASK               = input_selection_color + "3: Mark task"
-DELETE_TASK             = input_selection_color + "4: Delete task"
-SORT_TASKS              = input_selection_color + "5: Sort tasks"
+EXIT_PROGRAM            = Text('(Press Ctrl+C to terminate)', color=program_messages_color)
+DISCONNECT_PROGRAM      = Text('0: Disconnect', color=exit_program_color)
+CREATE_TASK             = Text('1: Create new task', color=input_selection_color).bold()
+EDIT_TASK               = Text('2: Edit task', color=input_selection_color).bold()
+MARK_TASK               = Text('3: Mark task', color=input_selection_color).bold()
+DELETE_TASK             = Text('4: Delete task', color=input_selection_color).bold()
+SORT_TASKS              = Text('5: Sort tasks', color=input_selection_color).bold()
 
 
 SORT_TASKS_OPTIONS = task_messages_color + """Sort tasks by:
@@ -51,19 +51,13 @@ SORT_TASKS_OPTIONS = task_messages_color + """Sort tasks by:
     4. Completion status
     """
 
-## error messages
-ERROR_MESSAGE = "⚠️ An error occurred."
-TASK_TITLE_ERROR = "🚫 Task title cannot be empty."
-TASK_NOT_FOUND_ERROR = "🚫 Invalid task index. Task not found."
-INVALID_CHOICE_MESSAGE = "Invalid choice. Please select a valid option."
-
 ## database
-ENTER_DATABASE_CONFIGURATION    = input_selection_color + "Enter the database configurations (Ctrl+C to exit.)"
-ENTER_DATABASE_NAME             = input_selection_color + "Database name: "
-ENTER_DATABASE_USER             = input_selection_color + "Database user: "
-ENTER_DATABASE_PASSWORD         = input_selection_color + "Database password: "
-ENTER_DATABASE_HOST             = input_selection_color + "Database host: "
-ENTER_DATABASE_PORT             = input_selection_color + "Database port: "
+ENTER_DATABASE_CONFIGURATION    = Text('Enter the database configurations (Ctrl+C to exit.)', color=input_selection_color)
+ENTER_DATABASE_NAME             = Text('Database name: ', color=input_selection_color)
+ENTER_DATABASE_USER             = Text('Database user: ', color=input_selection_color)
+ENTER_DATABASE_PASSWORD         = Text('Database password: ', color=input_selection_color)
+ENTER_DATABASE_HOST             = Text('Database host: ', color=input_selection_color)
+ENTER_DATABASE_PORT             = Text('Database port: ', color=input_selection_color)
 
 ## input messages
 ENTER_TASK_TITLE_MESSAGE            = input_messages_color + "Enter task title (cannot be null): "
@@ -94,11 +88,11 @@ PRESS_ENTER_MESSAGE             = program_messages_color + "(Press enter to cont
 TERMINATING_PROGRAM_MESSAGE     = program_messages_color + "(Exiting the program...)"
 
 ## error messages
-DATABASE_CONNECTION_ERROR   = error_color + "⚠️ Error connecting to database: "
-ERROR_MESSAGE               = error_color + "⚠️ An error occurred:"
-TASK_TITLE_ERROR            = "🚫 Task title cannot be empty."
-TASK_NOT_FOUND_ERROR        = "🚫 Invalid task index. Task not found."
-INVALID_CHOICE_MESSAGE      = "🚫 Invalid choice. Please select a valid option."
+DATABASE_CONNECTION_ERROR   = Text('⚠️ Error connecting to database: ', color=error_color).bold()
+ERROR_MESSAGE               = Text('⚠️ An error occured: ', color=error_color).bold()
+TASK_TITLE_ERROR            = Text('🚫 Task title cannot be empty.')
+TASK_NOT_FOUND_ERROR        = Text('🚫 Invalid task index. Task not found.')
+INVALID_CHOICE_MESSAGE      = Text('🚫 Invalid choice. Please select a valid option.')
 
 # def database_connection_error(error):
 #     message = f"Error connecting to database: {error}"
