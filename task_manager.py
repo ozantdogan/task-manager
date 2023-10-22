@@ -1,36 +1,23 @@
-from sqlalchemy import create_engine, asc, desc, func
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import asc, desc, func
 from models import Task
 from app_settings import *
-from db_settings import connect_db, db_values
 import messages
 
-connect_db()
-
-DB_USER = db_values.get('db_user')
-DB_PASSWORD = db_values.get('db_password')
-DB_HOST = db_values.get('db_host')
-DB_PORT = db_values.get('db_port')
-DB_NAME = db_values.get('db_name')
-
-engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
-Base = declarative_base()
-Base.metadata.create_all(engine)
-Session = sessionmaker(bind=engine)
-session = Session()
-
 class TaskManager:
-    def __init__(self):
+    def __init__(self, session):
         self.task_db_ids = {}
         self.sortby = Task.createdon
         self.sort_order = asc
+        self.session = session
 
     def get_task_count(self):
-        return session.query(Task).count()
+        return self.session.query(Task).count()
+    
+    def get_db_name(self):
+        return self.session.bind.url.database
     
     def list_tasks(self):
-        tasks = session.query(Task).order_by(self.sort_order(self.sortby)).all()
+        tasks = self.session.query(Task).order_by(self.sort_order(self.sortby)).all()
         if not tasks:
             print(messages.NO_TASKS_FOUND_MESSAGE)
         else:
@@ -44,21 +31,23 @@ class TaskManager:
         if not title:
             raise ValueError(messages.TASK_TITLE_ERROR)
         task = Task(title=title, description=description)
-        session.add(task)
-        session.commit()
+        self.session.add(task)
+        self.session.commit()
         print(messages.TASK_ADDED_MESSAGE.format(title=title))
 
     def edit_task(self, task_index):
         try:
             task_id = self.task_db_ids.get(task_index)
             if task_id:
-                task = session.query(Task).filter_by(id=task_id).first()
+                task = self.session.query(Task).filter_by(id=task_id).first()
 
-                title = input(messages.ENTER_NEW_TASK_TITLE_MESSAGE)
+                print(messages.ENTER_NEW_TASK_TITLE_MESSAGE)
+                title = input()
                 if(title == ""):
                     title = task.title
 
-                description = input(messages.ENTER_NEW_TASK_DESCRIPTION_MESSAGE)
+                print(messages.ENTER_NEW_TASK_DESCRIPTION_MESSAGE)
+                description = input()
                 if(description == ""):
                     description = task.description
                 elif(description == CLEAR):
@@ -68,7 +57,7 @@ class TaskManager:
                 task.description = description
                 task.modifiedon = func.now()
 
-                session.commit()
+                self.session.commit()
                 self.task_db_ids[task_index] = task_id
                 print(messages.TASK_EDITED_MESSAGE.format(title=title))
             else:
@@ -103,27 +92,27 @@ class TaskManager:
                     raise ValueError(messages.INVALID_CHOICE_MESSAGE)
                 task_id = self.task_db_ids.get(task_index)
                 if task_id:
-                    task = session.query(Task).filter_by(id=task_id).first()
+                    task = self.session.query(Task).filter_by(id=task_id).first()
                     task.is_completed = not task.is_completed
                     task.modifiedon = func.now()
-                    session.commit()
+                    self.session.commit()
                     print(messages.TASK_MARKED_MESSAGE.format(title=task.title, is_completed='completed' if task.is_completed else 'not completed'))
                 else:
                     raise ValueError(messages.TASK_NOT_FOUND_ERROR)
             elif task_index == "-a":
-                uncompleted_tasks = session.query(Task).filter_by(is_completed=False).all()
+                uncompleted_tasks = self.session.query(Task).filter_by(is_completed=False).all()
                 if uncompleted_tasks:
                     for task in uncompleted_tasks:
                         task.is_completed = True
                         task.modifiedon = func.now()
-                    session.commit()
+                    self.session.commit()
                     print(messages.ALL_TASKS_MARKED_COMPLETED_MESSAGE)
                 else:
-                    completed_tasks = session.query(Task).filter_by(is_completed=True).all()
+                    completed_tasks = self.session.query(Task).filter_by(is_completed=True).all()
                     for task in completed_tasks:
                         task.is_completed = False
                         task.modifiedon = func.now()
-                    session.commit()
+                    self.session.commit()
                     print(messages.ALL_TASKS_MARKED_NOT_COMPLETED_MESSAGE)
             else:
                 raise ValueError(messages.INVALID_CHOICE_MESSAGE)
@@ -136,8 +125,8 @@ class TaskManager:
                 print(messages.CONFIRM_DELETE_ALL_TASKS_MESSAGE)
                 confirm = input()
                 if confirm.lower() == "y":
-                    session.query(Task).delete()
-                    session.commit()
+                    self.session.query(Task).delete()
+                    self.session.commit()
                     self.task_db_ids.clear()
                     print(messages.ALL_TASKS_DELETED_MESSAGE)
             elif task_index.isdigit():
@@ -146,9 +135,9 @@ class TaskManager:
                     raise ValueError(messages.INVALID_CHOICE_MESSAGE)
                 task_id = self.task_db_ids.get(task_index)
                 if task_id:
-                    task = session.query(Task).filter_by(id=task_id).first()
-                    session.delete(task)
-                    session.commit()
+                    task = self.session.query(Task).filter_by(id=task_id).first()
+                    self.session.delete(task)
+                    self.session.commit()
                     del self.task_db_ids[task_index]
                     print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
                 else:

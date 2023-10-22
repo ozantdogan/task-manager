@@ -1,9 +1,13 @@
 from configparser import ConfigParser
-from getpass import getpass
-import psycopg2
-import os
-import time
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker
+from app_settings import *
+from models import Base
 import messages
+from getpass import getpass
+import messages
+import time
+import os
 
 config = ConfigParser()
 config.read('config.ini')
@@ -27,29 +31,26 @@ def initiliaze_db():
 
 def connect_db():
     initiliaze_db()
-    while True:
-        try:
-            conn = psycopg2.connect(
-                dbname=db_values.get('db_name'),
-                user=db_values.get('db_user'),
-                password=db_values.get('db_password'),
-                host=db_values.get('db_host'),
-                port=db_values.get('db_port')
-            )
-            cursor = conn.cursor()
-            cursor.execute("SELECT 1")
-            result = cursor.fetchone()
-            if result[0] == 1:
-                print(messages.CONNECTED_TO_DATABASE_MESSAGE)
-                time.sleep(0.25)
-                break
-        except Exception as e:
-            os.system("cls")
-            print(messages.DATABASE_CONNECTION_ERROR, e)
+    try:
+        DB_USER = db_values.get('db_user')
+        DB_PASSWORD = db_values.get('db_password')
+        DB_HOST = db_values.get('db_host')
+        DB_PORT = db_values.get('db_port')
+        DB_NAME = db_values.get('db_name')
+        engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
+        Base.metadata.create_all(engine)
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        if session.query(text('1')).first():
+            print(messages.CONNECTED_TO_DATABASE_MESSAGE)
             time.sleep(0.5)
-            set_db()
-            initiliaze_db()
-            
+            return session
+    except Exception as e:
+        os.system("cls")
+        print(messages.DATABASE_CONNECTION_ERROR, e)
+        time.sleep(0.5)
+        set_db()
+
 def set_db():
     print(messages.ENTER_DATABASE_CONFIGURATION)
     db_name = input(messages.ENTER_DATABASE_NAME)
