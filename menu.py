@@ -3,16 +3,14 @@ import time
 import messages
 
 def show_menu(task_manager):
-    os.system("cls")
-    messages.welcome_message()
-    time.sleep(1.5)
 
     while True:
         try:
             os.system("cls")
             task_count = task_manager.get_task_count()
+            print(messages.TASK_MANAGER_TITLE.format(DB_NAME=task_manager.get_db_name()))
             task_manager.list_tasks()
-            print("_____________________")
+            print(messages.SEPARATOR_LINE)
 
             print(messages.CREATE_TASK)
             if(task_count > 0):
@@ -21,6 +19,7 @@ def show_menu(task_manager):
                 print(messages.DELETE_TASK)
             if(task_count > 1):
                 print(messages.SORT_TASKS)
+            print(messages.DISCONNECT_PROGRAM)
             print(messages.EXIT_PROGRAM)
 
             choice = input()
@@ -60,13 +59,13 @@ def show_menu(task_manager):
                 index = int(input())
                 task_manager.sort_tasks(index)
             
-            ##Exit program
+            ##Disconnect db
             elif choice == "0":
-                print(messages.EXIT_PROGRAM_MESSAGE)
+                print(messages.DISCONNECT_MESSAGE)
                 time.sleep(0.5)
                 os.system("cls")
-                exit()
-
+                return 0
+                
             else:
                 print(messages.INVALID_CHOICE_MESSAGE)
             print(messages.PRESS_ENTER_MESSAGE)
