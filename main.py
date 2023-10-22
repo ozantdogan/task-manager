@@ -1,5 +1,5 @@
 from task_manager import TaskManager
-from db_settings import set_db, connect_db
+from db_settings import *
 from menu import show_menu
 import os
 import time
@@ -11,8 +11,10 @@ def main():
     time.sleep(1.5)
     
     while True:
-        session = connect_db()
         try:
+            if check_db_initials() == False:
+                set_db()
+            session = connect_db()
             task_manager = TaskManager(session)
             menu = show_menu(task_manager)
             if(menu == 0):
@@ -20,6 +22,7 @@ def main():
                     session.close()
                 del menu
                 del task_manager
+                
                 set_db()
 
         except KeyboardInterrupt:
@@ -29,6 +32,7 @@ def main():
             exit()
 
         except Exception as e:
+            os.system("cls")
             continue
         
 if __name__ == "__main__":

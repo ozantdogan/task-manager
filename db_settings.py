@@ -52,6 +52,7 @@ def connect_db():
         set_db()
 
 def set_db():
+    delete_db_initials()
     print(messages.ENTER_DATABASE_CONFIGURATION)
     db_name = input(messages.ENTER_DATABASE_NAME)
     db_user = input(messages.ENTER_DATABASE_USER)
@@ -67,4 +68,20 @@ def set_db():
     
     with open('config.ini', 'w') as config_file:
         config.write(config_file)
+
+def delete_db_initials():
+    config.set('database', 'name', "")
+    config.set('database', 'user', "")
+    config.set('database', 'password', "")
+    config.set('database', 'host', "")
+    config.set('database', 'port', "")
     
+    with open('config.ini', 'w') as config_file:
+        config.write(config_file)
+
+def check_db_initials():
+    initiliaze_db()
+    if(db_values.get('db_name') == "" and db_values.get('db_user') == "" and db_values.get('db_password') == "" and db_values.get('db_host') == "" and db_values.get('db_port') == ""):
+        return False
+    else:
+        return True
