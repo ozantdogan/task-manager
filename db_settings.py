@@ -55,7 +55,7 @@ def set_db():
     print(messages.ENTER_DATABASE_CONFIGURATION)
     db_name = input(messages.ENTER_DATABASE_NAME)
     db_user = input(messages.ENTER_DATABASE_USER)
-    db_password = getpass(messages.ENTER_DATABASE_PASSWORD)
+    db_password = getpass(str(messages.ENTER_DATABASE_PASSWORD))
     db_host = input(messages.ENTER_DATABASE_HOST)
     db_port = input(messages.ENTER_DATABASE_PORT)
 
