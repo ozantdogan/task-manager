@@ -37,11 +37,9 @@ def show_menu(task_manager):
             ##View task
             elif choice == "2" and task_count > 0:
                 print(messages.ENTER_VIEW_TASK_MESSAGE)
-                task_index = int(input())
-                if task_manager.get_task(task_index):
-                    view_task_menu(task_manager, task_index)
-                else :
-                    raise ValueError(messages.TASK_NOT_FOUND_ERROR)
+                task_index = input()
+                task_manager.get_task(task_index)
+                view_task_menu(task_manager, task_index)
 
             ##Edit a task
             elif choice == "3" and task_count > 0:
@@ -85,7 +83,6 @@ def show_menu(task_manager):
             print(messages.PRESS_ENTER_MESSAGE)
             input()
     
-
 def view_task_menu(task_manager, task_index):
     os.system("cls")
     print(messages.TASK_MANAGER_TITLE.format(DB_NAME=task_manager.get_db_name()) + '\n')

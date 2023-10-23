@@ -11,11 +11,14 @@ class TaskManager:
         self.session = session
 
     def get_task(self, task_index):
+        if not task_index.isdigit():
+            raise ValueError(messages.INVALID_CHOICE_MESSAGE)
+
         task_id = self.task_db_ids.get(task_index)
         if task_id:
             return True
         else:
-            return False
+            raise ValueError(messages.TASK_NOT_FOUND_ERROR)
         
     def get_task_count(self):
         return self.session.query(Task).count()
