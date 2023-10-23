@@ -10,13 +10,15 @@ class TaskManager:
         self.sort_order = asc
         self.session = session
 
-    def get_task(self, task_index):
+    def get_task(self):
+        
+        task_index = input()
         if not task_index.isdigit():
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
 
-        task_id = self.task_db_ids.get(task_index)
+        task_id = self.task_db_ids.get(int(task_index))
         if task_id:
-            return True
+            return int(task_index)
         else:
             raise ValueError(messages.TASK_NOT_FOUND_ERROR)
         
