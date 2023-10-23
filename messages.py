@@ -33,15 +33,18 @@ def welcome_message():
 
 
 ## menu
-TASK_MANAGER_TITLE      = task_manager_title_color + '{DB_NAME}' + '\n'
-SEPARATOR_LINE          = '--------------------------------------\n'
+TASK_MANAGER_TITLE      = task_manager_title_color + '{DB_NAME}'
+SEPARATOR_LINE          = '--------------------------------------'
 EXIT_PROGRAM            = Text('(Press Ctrl+C to terminate)', color=program_messages_color)
 DISCONNECT_PROGRAM      = Text('0: Disconnect', color=exit_program_color)
 CREATE_TASK             = Text('1: Create new task', color=input_selection_color).bold()
-EDIT_TASK               = Text('2: Edit task', color=input_selection_color).bold()
-MARK_TASK               = Text('3: Mark task', color=input_selection_color).bold()
-DELETE_TASK             = Text('4: Delete task', color=input_selection_color).bold()
-SORT_TASKS              = Text('5: Sort tasks', color=input_selection_color).bold()
+VIEW_TASK               = Text('2: View task', color=input_selection_color).bold()
+EDIT_TASK               = Text('3: Edit task', color=input_selection_color).bold()
+MARK_TASK               = Text('4: Mark task', color=input_selection_color).bold()
+DELETE_TASK             = Text('5: Delete task', color=input_selection_color).bold()
+SORT_TASKS              = Text('6: Sort tasks', color=input_selection_color).bold()
+
+
 
 
 SORT_TASKS_OPTIONS = task_messages_color + """Sort tasks by:
@@ -69,6 +72,7 @@ ENTER_MARK_TASK_MESSAGE             = input_messages_color + f"Enter task index 
 ENTER_DELETE_TASK_MESSAGE           = input_messages_color + f"Enter task index to delete (Type {ALL} to delete all): "
 CONFIRM_DELETE_ALL_TASKS_MESSAGE    = input_messages_color + "Are you sure you want to delete all tasks? (Y/n): "
 ENTER_SORT_TASKS_MESSAGE            = input_messages_color + "Enter sort option: "
+ENTER_VIEW_TASK_MESSAGE             = input_messages_color + "Enter task index to view: "
 
 ## task messages
 TASK_ADDED_MESSAGE                      = task_messages_color + "➕ Task '{title}' added."
@@ -83,6 +87,7 @@ TASKS_SORTED_MESSAGE                    = task_messages_color + "🔀 Task index
 ## program messages
 CONNECTED_TO_DATABASE_MESSAGE   = Text("(Connected to the database successfully.)", color=program_messages_color).italic()
 NO_TASKS_FOUND_MESSAGE          = Text("(No tasks found.)", color=program_messages_color).italic()
+NO_DESCRIPTION_MESSAGE          = Text("(No description.)", color=program_messages_color).italic()
 DISCONNECT_MESSAGE              = Text("(Disconnected from the database.)", color=program_messages_color).italic()
 PRESS_ENTER_MESSAGE             = Text("(Press enter to continue...)", color=program_messages_color).italic()
 TERMINATING_PROGRAM_MESSAGE     = Text("(Exiting the program...)", color=program_messages_color).bold_italic()

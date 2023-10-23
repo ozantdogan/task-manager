@@ -10,6 +10,13 @@ class TaskManager:
         self.sort_order = asc
         self.session = session
 
+    def get_task(self, task_index):
+        task_id = self.task_db_ids.get(task_index)
+        if task_id:
+            return True
+        else:
+            return False
+        
     def get_task_count(self):
         return self.session.query(Task).count()
     
@@ -24,7 +31,9 @@ class TaskManager:
             self.task_db_ids = {index: task.id for index, task in enumerate(tasks, start=1)}
             for index, task in enumerate(tasks, start=1):
                 status = COMPLETED if task.is_completed else NOT_COMPLETED
-                description = f": {task.description}" if task.description.strip() else ""
+                # description = f": {task.description}" if task.description.strip() else ""
+                # print(f"{index}{status}  {task.title}{description}")
+                description = f" [...]" if task.description.strip() else ""
                 print(f"{index}{status}  {task.title}{description}")
     
     def add_task(self, title, description):
@@ -34,6 +43,16 @@ class TaskManager:
         self.session.add(task)
         self.session.commit()
         print(messages.TASK_ADDED_MESSAGE.format(title=title))
+
+    def view_task(self, task_index):
+        task_id = self.task_db_ids.get(task_index)
+        task = self.session.query(Task).filter_by(id=task_id).first()
+        print(f"{task.title}")
+        print(messages.SEPARATOR_LINE)
+        if task.description == "":
+            print(messages.NO_DESCRIPTION_MESSAGE)
+        else:
+            print(f"{task.description}") 
 
     def edit_task(self, task_index):
         try:
