@@ -46,13 +46,14 @@ class TaskManager:
                 description = f" [...]" if task.description.strip() else ""
                 print(f"{index}{status}  {task.title}{description}")
     
-    def add_task(self, title, description):
-        if not title:
+    def add_task(self):
+        print(messages.ENTER_TASK_TITLE_MESSAGE)
+        title = input()
+        print(messages.ENTER_TASK_DESCRIPTION_MESSAGE)
+        description = input()
+        if title == "":
             raise ValueError(messages.TASK_TITLE_ERROR)
-        task = Task(title=title, description=description)
-        self.session.add(task)
-        self.session.commit()
-        print(messages.TASK_ADDED_MESSAGE.format(title=title))
+        self.session.add(Task(title=title, description=description))
 
     def view_task(self, task):
         status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')
@@ -139,22 +140,17 @@ class TaskManager:
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
 
-    def sort_tasks(self, index):
-        try:
-            current_sortby = self.sortby
-            if index == 1:
-                self.sortby = Task.title
-            elif index == 2:
-                self.sortby = Task.createdon
-            elif index == 3:
-                self.sortby = Task.modifiedon
-            elif index == 4:
-                self.sortby = Task.is_completed
-            else:
-                raise ValueError(messages.INVALID_CHOICE_MESSAGE)
-            if current_sortby == self.sortby:
-                self.sort_order = desc if self.sort_order == asc else asc
+    def sort_tasks(self):
+        index = int(input())
+        if index == 1:
+            self.sortby = Task.title
+        elif index == 2:
+            self.sortby = Task.createdon
+        elif index == 3:
+            self.sortby = Task.modifiedon
+        elif index == 4:
+            self.sortby = Task.is_completed
+        else:
+            raise ValueError(messages.INVALID_CHOICE_MESSAGE)
+        self.sort_order = desc if self.sort_order == asc else asc
             
-        except ValueError as e:
-            print(messages.ERROR_MESSAGE, e)
-    
