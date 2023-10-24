@@ -3,7 +3,6 @@ import time
 import messages
 
 def show_menu(task_manager):
-
     while True:
         try:
             os.system("cls")
@@ -37,27 +36,24 @@ def show_menu(task_manager):
             ##View task
             elif choice == "2" and task_count > 0:
                 print(messages.ENTER_VIEW_TASK_MESSAGE)
-                task_index = task_manager.get_task()
-                if task_index:
-                    view_task_menu(task_manager, task_index)
+                task = task_manager.get_task()
+                if task:
+                    view_task_menu(task_manager, task)
 
             ##Edit a task
             elif choice == "3" and task_count > 0:
                 print(messages.ENTER_EDIT_TASK_MESSAGE)
-                task_index = int(input())
-                task_manager.edit_task(task_index)
+                task_manager.edit_task()
 
             ##Mark a task
             elif choice == "4" and task_count > 0:
                 print(messages.ENTER_MARK_TASK_MESSAGE)
-                task_index = input()
-                task_manager.mark_task(task_index)
+                task_manager.mark_task()
 
             ##Delete a task
             elif choice == "5" and task_count > 0:
                 print(messages.ENTER_DELETE_TASK_MESSAGE)
-                task_index = input()
-                task_manager.delete_task(task_index)
+                task_manager.delete_task()
 
             ##Sort tasks
             elif choice == "6" and task_count > 1:
@@ -83,9 +79,8 @@ def show_menu(task_manager):
             print(messages.PRESS_ENTER_MESSAGE)
             input()
     
-def view_task_menu(task_manager, task_index):
+def view_task_menu(task_manager, task):
     os.system("cls")
     print(messages.TASK_MANAGER_TITLE.format(DB_NAME=task_manager.get_db_name()) + '\n')
-    task_manager.view_task(task_index)
-    print('\n' + messages.SEPARATOR_LINE)
+    task_manager.view_task(task)
 

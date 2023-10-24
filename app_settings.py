@@ -2,13 +2,21 @@ from colorama import Fore, Back, Style, init
 
 #Completed task status
 #
-COMPLETED = '☑️'
-NOT_COMPLETED = '🔳'
+app_icons = {
+    'COMPLETED': '☑️',
+    'NOT_COMPLETED': '🔳'
+}
 
 #Commands
 #
-CLEAR = "-clr"
-ALL = "-a"
+app_commands = {
+    'CLEAR': '-clr',
+    'ALL': '-a'
+}
+
+
+
+
 
 class Text:
     def __init__(self, text, color=None):
