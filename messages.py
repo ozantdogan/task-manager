@@ -1,4 +1,4 @@
-from app_settings import Text, CLEAR, ALL, colors, styles
+from app_settings import Text, app_commands, colors, styles
 import time
 from colorama import init
 
@@ -34,21 +34,22 @@ def welcome_message():
 
 ## menu
 TASK_MANAGER_TITLE      = task_manager_title_color + '{DB_NAME}'
-SEPARATOR_LINE          = '--------------------------------------'
+SEPARATOR_LINE          = '----------------------------------------------'
 EXIT_PROGRAM            = Text('(Press Ctrl+C to terminate)', color=program_messages_color)
-DISCONNECT_PROGRAM      = Text('0: Disconnect', color=exit_program_color)
-CREATE_TASK             = Text('1: Create new task', color=input_selection_color).bold()
-VIEW_TASK               = Text('2: View task', color=input_selection_color).bold()
-EDIT_TASK               = Text('3: Edit task', color=input_selection_color).bold()
-MARK_TASK               = Text('4: Mark task', color=input_selection_color).bold()
-DELETE_TASK             = Text('5: Delete task', color=input_selection_color).bold()
-SORT_TASKS              = Text('6: Sort tasks', color=input_selection_color).bold()
+DISCONNECT_PROGRAM      = Text('Disconnect', color=exit_program_color)
+CREATE_TASK             = Text('New task', color=input_selection_color).bold()
+VIEW_TASK               = Text('View task', color=input_selection_color).bold()
+EDIT_TASK               = Text('Edit task', color=input_selection_color).bold()
+MARK_TASK               = Text('Mark task', color=input_selection_color).bold()
+DELETE_TASK             = Text('Delete task', color=input_selection_color).bold()
+SORT_TASKS              = Text('Sort tasks', color=input_selection_color).bold()
+BACK                    = Text('Back', color=input_selection_color).bold()
 
 
 
 
 SORT_TASKS_OPTIONS = task_messages_color + """Sort tasks by:
-    1. Title
+    1. Alphabetical order
     2. Creation date
     3. Modification date
     4. Completion status
@@ -67,9 +68,9 @@ ENTER_TASK_TITLE_MESSAGE            = input_messages_color + "Enter task title (
 ENTER_TASK_DESCRIPTION_MESSAGE      = input_messages_color + "Enter task description: "
 ENTER_EDIT_TASK_MESSAGE             = input_messages_color + "Enter task index to edit: "
 ENTER_NEW_TASK_TITLE_MESSAGE        = input_messages_color + "Enter new task title: "
-ENTER_NEW_TASK_DESCRIPTION_MESSAGE  = input_messages_color + f"Enter new task description (Type {CLEAR} to clear description): "
-ENTER_MARK_TASK_MESSAGE             = input_messages_color + f"Enter task index to mark (Type {ALL} to mark all): "
-ENTER_DELETE_TASK_MESSAGE           = input_messages_color + f"Enter task index to delete (Type {ALL} to delete all): "
+ENTER_NEW_TASK_DESCRIPTION_MESSAGE  = input_messages_color + f"Enter new task description (Type {app_commands.get('CLEAR')} to clear description): "
+ENTER_MARK_TASK_MESSAGE             = input_messages_color + f"Enter task index to mark (Type {app_commands.get('ALL')} to mark all): "
+ENTER_DELETE_TASK_MESSAGE           = input_messages_color + f"Enter task index to delete (Type {app_commands.get('ALL')} to delete all): "
 CONFIRM_DELETE_ALL_TASKS_MESSAGE    = input_messages_color + "Are you sure you want to delete all tasks? (Y/n): "
 ENTER_SORT_TASKS_MESSAGE            = input_messages_color + "Enter sort option: "
 ENTER_VIEW_TASK_MESSAGE             = input_messages_color + "Enter task index to view: "
