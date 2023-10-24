@@ -1,6 +1,6 @@
 from task_manager import TaskManager
 from db_settings import *
-from menu import show_menu
+from menu import Menu
 import os
 import time
 import messages
@@ -16,8 +16,9 @@ def main():
                 set_db()
             session = connect_db()
             task_manager = TaskManager(session)
-            menu = show_menu(task_manager)
-            if(menu == 0):
+            menu = Menu(task_manager)
+            menu.show_menu()
+            if(menu.disconnect==True):
                 if session:
                     session.close()
                 del menu
