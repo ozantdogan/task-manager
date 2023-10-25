@@ -7,11 +7,14 @@ init(autoreset=True)
 welcome_message_color = colors.get('welcome_message_color')
 task_manager_title_color = colors.get('task_manager_title_color')
 input_selection_color = colors.get('input_selection_color')
+subtask_selection_color = colors.get('subtask_selection_color')
 exit_program_color = colors.get('exit_program_color')
 input_messages_color = colors.get('input_messages_color')
+subtask_messages_color = colors.get('subtask_messages_color')
 task_messages_color = colors.get('task_messages_color')
 program_messages_color = colors.get('program_messages_color')
 error_color = colors.get('error_color')
+line_color = colors.get('line_color')
 
 program_messages_style = styles.get('program_messages_style')
 
@@ -34,15 +37,22 @@ def welcome_message():
 
 ## menu
 TASK_MANAGER_TITLE      = task_manager_title_color + '{DB_NAME}'
-SEPARATOR_LINE          = '----------------------------------------------'
+SEPARATOR_LINE          = Text('----------------------------------------------', color=line_color)
 EXIT_PROGRAM            = Text('(Press Ctrl+C to terminate)', color=program_messages_color)
 DISCONNECT_PROGRAM      = Text('Disconnect', color=exit_program_color)
-CREATE_TASK             = Text('New', color=input_selection_color).bold()
-VIEW_TASK               = Text('View', color=input_selection_color).bold()
-EDIT_TASK               = Text('Edit', color=input_selection_color).bold()
-MARK_TASK               = Text('Mark', color=input_selection_color).bold()
-DELETE_TASK             = Text('Delete', color=input_selection_color).bold()
-SORT_TASKS              = Text('Sort', color=input_selection_color).bold()
+CREATE_TASK             = Text('New task', color=input_selection_color).bold()
+VIEW_TASK               = Text('View task', color=input_selection_color).bold()
+EDIT_TASK               = Text('Edit task', color=input_selection_color).bold()
+MARK_TASK               = Text('Mark task', color=input_selection_color).bold()
+DELETE_TASK             = Text('Delete task', color=input_selection_color).bold()
+SORT_TASKS              = Text('Sort tasks', color=input_selection_color).bold()
+
+CREATE_SUBTASK          = Text('New subtask', color=subtask_selection_color).bold()
+VIEW_SUBTASK            = Text('View subtask', color=subtask_selection_color).bold()
+EDIT_SUBTASK            = Text('Edit subtask', color=subtask_selection_color).bold()
+MARK_SUBTASK            = Text('Mark subtask', color=subtask_selection_color).bold()
+DELETE_SUBTASK          = Text('Delete subtask', color=subtask_selection_color).bold()
+
 BACK                    = Text('Back', color=exit_program_color).bold()
 
 SORT_TASKS_OPTIONS = task_messages_color + """Sort tasks by:
@@ -72,6 +82,13 @@ CONFIRM_DELETE_ALL_TASKS_MESSAGE    = input_messages_color + "Are you sure you w
 ENTER_SORT_TASKS_MESSAGE            = input_messages_color + "Enter sort option: "
 ENTER_VIEW_TASK_MESSAGE             = input_messages_color + "Enter task index to view: "
 
+## input messages (subtasks)
+ENTER_SUBTASK_TITLE_MESSAGE         = subtask_messages_color + "Enter subtask title (cannot be null): "
+ENTER_SUBTASK_DESCRIPTION_MESSAGE   = subtask_messages_color + "Enter subtask description: "
+ENTER_EDIT_SUBTASK_MESSAGE          = subtask_messages_color + "Enter subtask index to edit: "
+ENTER_MARK_SUBTASK_MESSAGE          = subtask_messages_color + f"Enter subtask index to mark (Type {app_commands.get('ALL')} to mark all): "
+ENTER_DELETE_SUBTASK_MESSAGE        = subtask_messages_color + f"Enter subtask index to delete (Type {app_commands.get('ALL')} to delete all): "
+
 ## task messages
 TASK_ADDED_MESSAGE                      = task_messages_color + "➕ Task '{title}' added."
 TASK_EDITED_MESSAGE                     = task_messages_color + "✏️ Task '{title}' edited."
@@ -83,6 +100,7 @@ ALL_TASKS_DELETED_MESSAGE               = task_messages_color + "🗑️ All tas
 TASKS_SORTED_MESSAGE                    = task_messages_color + "🔀 Task index changed from {old_index} to {new_index}."
 
 ## program messages
+SUBTASKS_MESSAGE                = Text("Subtasks:", color=program_messages_color).bold()
 CONNECTED_TO_DATABASE_MESSAGE   = Text("(Connected to the database successfully.)", color=program_messages_color).italic()
 NO_TASKS_FOUND_MESSAGE          = Text("(No tasks found.)", color=program_messages_color).italic()
 NO_DESCRIPTION_MESSAGE          = Text("(No description.)", color=program_messages_color).italic()
