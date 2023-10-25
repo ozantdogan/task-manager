@@ -95,6 +95,8 @@ class Menu:
                         else:
                             print(messages.PRESS_ENTER_MESSAGE)
                             input()
+                    else:
+                        raise ValueError(messages.INVALID_CHOICE_MESSAGE)
                 else:
                     raise ValueError(messages.INVALID_CHOICE_MESSAGE)
                 
