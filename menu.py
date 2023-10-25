@@ -8,7 +8,6 @@ class Menu:
         self.view = 'list'
         self.task_manager = task_manager
         self.buttons = {}
-        self.task_count = task_manager.get_task_count()
         self.selected_task = None
         self.disconnect = False
 
@@ -22,55 +21,57 @@ class Menu:
                     self.list_view()
                 elif self.view == 'task':
                     self.task_view()
-                print(messages.SEPARATOR_LINE)
+                print("")
                 self.buttons_menu()
                 print(messages.EXIT_PROGRAM)
                 selected_index = input()
 
-                if selected_index.isdigit and int(selected_index) in self.buttons.keys():
-                    choice = self.buttons.get(int(selected_index))
-                    if choice == messages.CREATE_TASK:
-                        self.task_manager.add_task()
+                
+                if selected_index.isdigit():
+                    if int(selected_index) in self.buttons.keys():
+                        choice = self.buttons.get(int(selected_index))
+                        if choice == messages.CREATE_TASK:
+                            self.task_manager.add_task(get_task=self.selected_task)
 
-                    elif choice == messages.VIEW_TASK:
-                        print(messages.ENTER_VIEW_TASK_MESSAGE)
-                        task = self.task_manager.get_task()
-                        if task:
-                            self.selected_task = task
-                            self.view = 'task'
-                            
-                    elif choice == messages.EDIT_TASK:
-                        self.task_manager.edit_task(get_task=self.selected_task)
+                        elif choice == messages.VIEW_TASK:
+                            print(messages.ENTER_VIEW_TASK_MESSAGE)
+                            task = self.task_manager.get_task()
+                            if task:
+                                self.selected_task = task
+                                self.view = 'task'
+                                
+                        elif choice == messages.EDIT_TASK:
+                            self.task_manager.edit_task(get_task=self.selected_task)
 
-                    elif choice == messages.MARK_TASK:
-                        self.task_manager.mark_task(get_task=self.selected_task)
+                        elif choice == messages.MARK_TASK:
+                            self.task_manager.mark_task(get_task=self.selected_task)
 
-                    elif choice == messages.DELETE_TASK:
-                        self.task_manager.delete_task(get_task=self.selected_task)
-                        self.view = 'list'
-                        self.selected_task = None
+                        elif choice == messages.DELETE_TASK:
+                            self.task_manager.delete_task(get_task=self.selected_task)
+                            self.view = 'list'
+                            self.selected_task = None
 
-                    elif choice == messages.SORT_TASKS:
-                        print(messages.SORT_TASKS_OPTIONS)
-                        print(messages.ENTER_SORT_TASKS_MESSAGE)
-                        self.task_manager.sort_tasks()
+                        elif choice == messages.SORT_TASKS:
+                            print(messages.SORT_TASKS_OPTIONS)
+                            print(messages.ENTER_SORT_TASKS_MESSAGE)
+                            self.task_manager.sort_tasks()
 
-                    elif choice == messages.BACK:
-                        self.view = 'list'
-                        self.selected_task = None
+                        elif choice == messages.BACK:
+                            self.view = 'list'
+                            self.selected_task = None
 
-                    elif choice == messages.DISCONNECT_PROGRAM:
-                        print(messages.DISCONNECT_MESSAGE)
-                        time.sleep(0.5)
-                        os.system("cls")
-                        self.disconnect = True
-                        return 0
-                    
-                    if choice == messages.VIEW_TASK or choice == messages.BACK:
-                        pass
-                    else:
-                        print(messages.PRESS_ENTER_MESSAGE)
-                        input()
+                        elif choice == messages.DISCONNECT_PROGRAM:
+                            print(messages.DISCONNECT_MESSAGE)
+                            time.sleep(0.5)
+                            os.system("cls")
+                            self.disconnect = True
+                            return 0
+                        
+                        if choice == messages.VIEW_TASK or choice == messages.BACK:
+                            pass
+                        else:
+                            print(messages.PRESS_ENTER_MESSAGE)
+                            input()
                 else:
                     raise ValueError(messages.INVALID_CHOICE_MESSAGE)
                 
@@ -87,11 +88,12 @@ class Menu:
         
     def buttons_menu(self):
         self.buttons.clear()
+        task_count = self.task_manager.get_task_count()
         i = 1
         if self.view == 'list':
             self.buttons = {}
             self.buttons[i] = messages.CREATE_TASK
-            if self.task_count > 0:
+            if task_count > 0:
                 i += 1
                 self.buttons[i] = messages.VIEW_TASK
                 i += 1
@@ -100,12 +102,14 @@ class Menu:
                 self.buttons[i] = messages.MARK_TASK
                 i += 1
                 self.buttons[i] = messages.DELETE_TASK
-            if self.task_count > 1:
+            if task_count > 1:
                 i += 1
                 self.buttons[i] = messages.SORT_TASKS
             
         elif self.view == 'task':
             self.buttons[i] = messages.BACK
+            i += 1
+            self.buttons[i] = messages.CREATE_TASK
             i += 1
             self.buttons[i] = messages.EDIT_TASK
             i += 1

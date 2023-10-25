@@ -14,10 +14,6 @@ app_commands = {
     'ALL': '-a'
 }
 
-
-
-
-
 class Text:
     def __init__(self, text, color=None):
         self.text = text
@@ -51,6 +47,7 @@ colors = {
     'task_messages_color': Fore.LIGHTMAGENTA_EX,
     'program_messages_color': Fore.LIGHTBLACK_EX,
     'error_color': Fore.RED,
+    'line_color': Fore.MAGENTA
 }
 
 styles = {

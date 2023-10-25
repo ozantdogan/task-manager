@@ -42,19 +42,40 @@ class TaskManager:
         else:
             self.task_db_ids = {index: task.id for index, task in enumerate(tasks, start=1)}
             for index, task in enumerate(tasks, start=1):
-                status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')
-                description = f" [...]" if task.description.strip() else ""
-                print(f"{index}{status}  {task.title}{description}")
+                if task.parent_id is None:
+                    status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')
+                    description = f" [...]" if task.description.strip() else ""
+                    print(f"{index}{status}  {task.title}{description}")
+                    subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()
+                    if subtasks:
+                        for subtask in subtasks:
+                            subtask_status = app_icons.get('COMPLETED') if subtask.is_completed else app_icons.get('NOT_COMPLETED')
+                            subtask_description = f" [...]" if subtask.description.strip() else ""
+                            print(f"  |_ {subtask_status} {subtask.title}{subtask_description}")
+                        print("")
     
-    def add_task(self):
+    def add_task(self, get_task=None):
+        if get_task:
+            print(messages.ENTER_SUBTASK_TITLE_MESSAGE)
+            subtask_title = input()
+            print(messages.ENTER_SUBTASK_DESCRIPTION_MESSAGE)
+            subtask_description = input()
+            if subtask_title == "":
+                raise ValueError(messages.TASK_TITLE_ERROR)
+            self.session.add(Task(title=subtask_title, description=subtask_description, parent_id=get_task.id))
+            self.session.commit()
+            return
+
         print(messages.ENTER_TASK_TITLE_MESSAGE)
         title = input()
         print(messages.ENTER_TASK_DESCRIPTION_MESSAGE)
         description = input()
         if title == "":
             raise ValueError(messages.TASK_TITLE_ERROR)
-        self.session.add(Task(title=title, description=description))
-
+        self.session.add(Task(title=title, description=description, parent_id=get_task.id if get_task else None))
+        self.session.commit()
+    
+    #TODO: Add subtask support
     def view_task(self, task):
         status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')
         task_title = Text(str(task.title)).bold()
@@ -63,7 +84,7 @@ class TaskManager:
 
         print(f"{status} {task_title}")
         print(messages.SEPARATOR_LINE)
-        print(messages.NO_DESCRIPTION_MESSAGE) if str(task_description) == "" else [print(line) for line in textwrap.wrap(str(task_description), width=len(messages.SEPARATOR_LINE))]
+        print(messages.NO_DESCRIPTION_MESSAGE) if str(task_description) == "" else [print(line) for line in textwrap.wrap(str(task_description), width=len(str(messages.SEPARATOR_LINE)))]
         print(messages.SEPARATOR_LINE)
         print(f"{createdon_text}")
         
@@ -71,6 +92,17 @@ class TaskManager:
             modifiedon_text = Text(f"Last modified: {task.modifiedon.strftime('%d %b %Y %I:%M %p')}", color=colors.get('program_messages_color')).bold_italic()
             print(f"{modifiedon_text}")
 
+        subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()
+        if subtasks:
+            print(messages.SEPARATOR_LINE)
+            print(messages.SUBTASKS_MESSAGE)
+            for subtask in subtasks:
+                subtask_status = app_icons.get('COMPLETED') if subtask.is_completed else app_icons.get('NOT_COMPLETED')
+                subtask_title = Text(str(subtask.title)).bold()
+                subtask_description = f" [...]" if subtask.description.strip() else ""
+                print(f" {subtask_status} {subtask_title}{subtask_description}")
+            
+    #TODO: Add subtask support
     def edit_task(self, get_task=None):
         if not get_task:
             print(messages.ENTER_EDIT_TASK_MESSAGE)
@@ -98,6 +130,8 @@ class TaskManager:
         self.session.commit()
         print(messages.TASK_EDITED_MESSAGE.format(title=previous_title))
 
+    #TODO: Add subtask support
+    #TODO: If task is completed, mark all subtasks as completed
     def mark_task(self, get_task=None):
         if not get_task:
             print(messages.ENTER_MARK_TASK_MESSAGE)
@@ -129,7 +163,8 @@ class TaskManager:
 
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
-            
+    
+    #TODO: Add subtask support
     def delete_task(self, get_task=None):
         if not get_task:
             print(messages.ENTER_DELETE_TASK_MESSAGE)
