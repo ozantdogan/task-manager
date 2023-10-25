@@ -256,6 +256,7 @@ class TaskManager:
     def delete_subtask(self, get_task):
         print(messages.ENTER_DELETE_SUBTASK_MESSAGE)
         subtask = self.get_task(get_task=get_task)
+        self.delete_all_subtasks(subtask)
         self.session.delete(subtask)
         self.session.commit()
         print(messages.TASK_DELETED_MESSAGE.format(deleted_task=subtask.title))
