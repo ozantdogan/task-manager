@@ -127,7 +127,6 @@ class TaskManager:
         print(messages.SUBTASKS_MESSAGE)
         self.list_subtasks(task)
 
-    #TODO: Add subtask support
     def edit_task(self, get_task=None):
         if not get_task:
             print(messages.ENTER_EDIT_TASK_MESSAGE)
