@@ -26,7 +26,6 @@ class Menu:
                 print(messages.EXIT_PROGRAM)
                 selected_index = input()
 
-                
                 if selected_index.isdigit():
                     if int(selected_index) in self.buttons.keys():
                         choice = self.buttons.get(int(selected_index))
@@ -35,7 +34,7 @@ class Menu:
 
                         elif choice == messages.VIEW_TASK:
                             print(messages.ENTER_VIEW_TASK_MESSAGE)
-                            task = self.task_manager.get_task()
+                            task = self.task_manager.get_task(get_task=self.selected_task)
                             if task:
                                 self.selected_task = task
                                 self.view = 'task'
@@ -57,8 +56,11 @@ class Menu:
                             self.task_manager.sort_tasks()
 
                         elif choice == messages.BACK:
-                            self.view = 'list'
-                            self.selected_task = None
+                            if self.selected_task.parent_id is not None:
+                                self.selected_task = self.task_manager.get_task_by_id(self.selected_task.parent_id)
+                            else:
+                                self.view = 'list'
+                                self.selected_task = None
 
                         elif choice == messages.DISCONNECT_PROGRAM:
                             print(messages.DISCONNECT_MESSAGE)
@@ -89,6 +91,7 @@ class Menu:
     def buttons_menu(self):
         self.buttons.clear()
         task_count = self.task_manager.get_task_count()
+        
         i = 1
         if self.view == 'list':
             self.buttons = {}
@@ -107,17 +110,20 @@ class Menu:
                 self.buttons[i] = messages.SORT_TASKS
             
         elif self.view == 'task':
-            self.buttons[i] = messages.BACK
-            i += 1
+            has_subtasks = self.task_manager.has_subtasks(self.selected_task)
             self.buttons[i] = messages.CREATE_TASK
             i += 1
+            if(has_subtasks):
+                self.buttons[i] = messages.VIEW_TASK
+                i += 1
             self.buttons[i] = messages.EDIT_TASK
             i += 1
             self.buttons[i] = messages.MARK_TASK
             i += 1
             self.buttons[i] = messages.DELETE_TASK
-
-
+            i += 1
+            self.buttons[i] = messages.BACK
+            
         self.buttons[0] = messages.DISCONNECT_PROGRAM
         for key, value in self.buttons.items():
             print(str(key) + ':' + str(value))
