@@ -10,6 +10,7 @@ input_selection_color = colors.get('input_selection_color')
 subtask_selection_color = colors.get('subtask_selection_color')
 exit_program_color = colors.get('exit_program_color')
 input_messages_color = colors.get('input_messages_color')
+subtask_messages_color = colors.get('subtask_messages_color')
 task_messages_color = colors.get('task_messages_color')
 program_messages_color = colors.get('program_messages_color')
 error_color = colors.get('error_color')
@@ -82,11 +83,11 @@ ENTER_SORT_TASKS_MESSAGE            = input_messages_color + "Enter sort option:
 ENTER_VIEW_TASK_MESSAGE             = input_messages_color + "Enter task index to view: "
 
 ## input messages (subtasks)
-ENTER_SUBTASK_TITLE_MESSAGE         = input_messages_color + "Enter subtask title (cannot be null): "
-ENTER_SUBTASK_DESCRIPTION_MESSAGE   = input_messages_color + "Enter subtask description: "
-ENTER_EDIT_SUBTASK_MESSAGE          = input_messages_color + "Enter subtask index to edit: "
-ENTER_MARK_SUBTASK_MESSAGE          = input_messages_color + f"Enter subtask index to mark (Type {app_commands.get('ALL')} to mark all): "
-ENTER_DELETE_SUBTASK_MESSAGE        = input_messages_color + f"Enter subtask index to delete (Type {app_commands.get('ALL')} to delete all): "
+ENTER_SUBTASK_TITLE_MESSAGE         = subtask_messages_color + "Enter subtask title (cannot be null): "
+ENTER_SUBTASK_DESCRIPTION_MESSAGE   = subtask_messages_color + "Enter subtask description: "
+ENTER_EDIT_SUBTASK_MESSAGE          = subtask_messages_color + "Enter subtask index to edit: "
+ENTER_MARK_SUBTASK_MESSAGE          = subtask_messages_color + f"Enter subtask index to mark (Type {app_commands.get('ALL')} to mark all): "
+ENTER_DELETE_SUBTASK_MESSAGE        = subtask_messages_color + f"Enter subtask index to delete (Type {app_commands.get('ALL')} to delete all): "
 
 ## task messages
 TASK_ADDED_MESSAGE                      = task_messages_color + "➕ Task '{title}' added."
@@ -97,7 +98,6 @@ ALL_TASKS_MARKED_NOT_COMPLETED_MESSAGE  = task_messages_color + "✔️ All task
 TASK_DELETED_MESSAGE                    = task_messages_color + "🗑️ Task '{deleted_task}' deleted."
 ALL_TASKS_DELETED_MESSAGE               = task_messages_color + "🗑️ All tasks deleted."
 TASKS_SORTED_MESSAGE                    = task_messages_color + "🔀 Task index changed from {old_index} to {new_index}."
-SUBTASK_SELECTED_MESSAGE                = task_messages_color + "🔹 Subtask '{title}' selected."
 
 ## program messages
 SUBTASKS_MESSAGE                = Text("Subtasks:", color=program_messages_color).bold()
