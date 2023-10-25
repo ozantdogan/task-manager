@@ -49,8 +49,11 @@ class Menu:
 
                         elif choice == messages.DELETE_TASK:
                             self.task_manager.delete_task(get_task=self.selected_task)
-                            self.view = 'list'
-                            self.selected_task = None
+                            if(self.selected_task.parent_id is not None):
+                                self.selected_task = self.task_manager.get_task_by_id(self.selected_task.parent_id)
+                            else:
+                                self.view = 'list'
+                                self.selected_task = None
 
                         elif choice == messages.SORT_TASKS:
                             print(messages.SORT_TASKS_OPTIONS)
