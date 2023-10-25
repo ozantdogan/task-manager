@@ -205,12 +205,25 @@ class TaskManager:
         
         elif isinstance(task, Task):
             task.is_completed = not task.is_completed
+
+            for subtask in self.session.query(Task).filter(Task.parent_id == task.id).all():
+                subtask.is_completed = task.is_completed
+                subtask.modifiedon = func.now()
+
             task.modifiedon = func.now()
             self.session.commit()
             print(messages.TASK_MARKED_MESSAGE.format(title=task.title, is_completed='completed' if task.is_completed else 'not completed'))
-
+            
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
+        
+    def mark_subtask(self, get_task):
+        print(messages.ENTER_MARK_SUBTASK_MESSAGE)
+        subtask = self.get_task(get_task=get_task)
+        subtask.is_completed = not subtask.is_completed
+        subtask.modifiedon = func.now()
+        self.session.commit()
+        print(messages.TASK_MARKED_MESSAGE.format(title=subtask.title, is_completed='completed' if subtask.is_completed else 'not completed'))
     
     #TODO: Add subtask support
     def delete_task(self, get_task=None):

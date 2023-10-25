@@ -67,6 +67,9 @@ class Menu:
                         elif choice == messages.EDIT_SUBTASK:
                             self.task_manager.edit_subtask(get_task=self.selected_task)
 
+                        elif choice == messages.MARK_SUBTASK:
+                            self.task_manager.mark_subtask(get_task=self.selected_task)
+
                         elif choice == messages.BACK:
                             if self.selected_task.parent_id is not None:
                                 self.selected_task = self.task_manager.get_task_by_id(self.selected_task.parent_id)
@@ -129,11 +132,13 @@ class Menu:
             i += 1
             self.task_buttons[i] = messages.DELETE_TASK
             i += 1
+            
+            self.subtask_buttons[i] = messages.CREATE_SUBTASK
+            i += 1
 
             has_subtasks = self.task_manager.has_subtasks(self.selected_task)
             if has_subtasks:
-                self.subtask_buttons[i] = messages.CREATE_SUBTASK
-                i += 1
+                
                 self.subtask_buttons[i] = messages.VIEW_SUBTASK
                 i += 1
                 self.subtask_buttons[i] = messages.EDIT_SUBTASK

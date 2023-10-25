@@ -79,6 +79,7 @@ ENTER_EDIT_SUBTASK_MESSAGE          = input_messages_color + "Enter subtask inde
 ENTER_NEW_TASK_TITLE_MESSAGE        = input_messages_color + "Enter new task title: "
 ENTER_NEW_TASK_DESCRIPTION_MESSAGE  = input_messages_color + f"Enter new task description (Type {app_commands.get('CLEAR')} to clear description): "
 ENTER_MARK_TASK_MESSAGE             = input_messages_color + f"Enter task index to mark (Type {app_commands.get('ALL')} to mark all): "
+ENTER_MARK_SUBTASK_MESSAGE          = input_messages_color + f"Enter subtask index to mark (Type {app_commands.get('ALL')} to mark all): "
 ENTER_DELETE_TASK_MESSAGE           = input_messages_color + f"Enter task index to delete (Type {app_commands.get('ALL')} to delete all): "
 CONFIRM_DELETE_ALL_TASKS_MESSAGE    = input_messages_color + "Are you sure you want to delete all tasks? (Y/n): "
 ENTER_SORT_TASKS_MESSAGE            = input_messages_color + "Enter sort option: "
