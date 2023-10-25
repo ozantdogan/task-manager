@@ -53,25 +53,6 @@ class TaskManager:
     def get_db_name(self):
         return self.session.bind.url.database
     
-    # def list_tasks(self):
-    #     tasks = tasks = self.session.query(Task).filter(Task.parent_id == None).order_by(self.sort_order(self.sortby)).all()
-    #     if not tasks:
-    #         print(messages.NO_TASKS_FOUND_MESSAGE)
-    #     else:
-    #         self.task_db_ids = {index: task.id for index, task in enumerate(tasks, start=1)}
-    #         for index, task in enumerate(tasks, start=1):
-    #             task_status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')
-    #             task_title = Text(str(task.title)).bold()
-    #             task_description = f" [...]" if task.description.strip() else ""
-    #             print(f" {index}{task_status} {task_title}{task_description}")
-    #             subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()
-    #             if subtasks:
-    #                 for subtask in subtasks:
-    #                     subtask_status = app_icons.get('COMPLETED') if subtask.is_completed else app_icons.get('NOT_COMPLETED')
-    #                     subtask_description = f" [...]" if subtask.description.strip() else ""
-    #                     print(f"  |_ {subtask_status} {subtask.title}{subtask_description}")
-    #                 print("")
-
     def list_tasks(self, parent_id=None, level=0):
         tasks = self.session.query(Task).filter(Task.parent_id == parent_id).order_by(self.sort_order(self.sortby)).all()
         if not tasks and level == 0:
