@@ -31,10 +31,10 @@ class Menu:
                 if selected_index.isdigit():
                     if int(selected_index) in self.buttons.keys():
                         choice = self.buttons.get(int(selected_index))
-                        if choice == messages.CREATE_TASK:
+                        if choice == messages.CREATE_TASK or choice == messages.CREATE_SUBTASK:
                             self.task_manager.add_task(get_task=self.selected_task)
 
-                        elif choice == messages.VIEW_TASK:
+                        elif choice == messages.VIEW_TASK or choice == messages.VIEW_SUBTASK:
                             print(messages.ENTER_VIEW_TASK_MESSAGE)
                             task = self.task_manager.get_task(get_task=self.selected_task)
                             if task:
@@ -81,7 +81,7 @@ class Menu:
                             self.disconnect = True
                             return 0
                         
-                        if choice == messages.VIEW_TASK or choice == messages.BACK:
+                        if choice == messages.VIEW_TASK or choice == messages.VIEW_SUBTASK or choice == messages.BACK:
                             pass
                         else:
                             print(messages.PRESS_ENTER_MESSAGE)
@@ -123,8 +123,6 @@ class Menu:
             
         elif self.view == 'task':
             
-            self.task_buttons[i] = messages.CREATE_TASK
-            i += 1
             self.task_buttons[i] = messages.EDIT_TASK
             i += 1
             self.task_buttons[i] = messages.MARK_TASK
@@ -134,6 +132,8 @@ class Menu:
 
             has_subtasks = self.task_manager.has_subtasks(self.selected_task)
             if has_subtasks:
+                self.subtask_buttons[i] = messages.CREATE_SUBTASK
+                i += 1
                 self.subtask_buttons[i] = messages.VIEW_SUBTASK
                 i += 1
                 self.subtask_buttons[i] = messages.EDIT_SUBTASK

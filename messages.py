@@ -46,6 +46,7 @@ MARK_TASK               = Text('Mark task', color=input_selection_color).bold()
 DELETE_TASK             = Text('Delete task', color=input_selection_color).bold()
 SORT_TASKS              = Text('Sort tasks', color=input_selection_color).bold()
 
+CREATE_SUBTASK          = Text('New subtask', color=subtask_selection_color).bold()
 VIEW_SUBTASK            = Text('View subtask', color=subtask_selection_color).bold()
 EDIT_SUBTASK            = Text('Edit subtask', color=subtask_selection_color).bold()
 MARK_SUBTASK            = Text('Mark subtask', color=subtask_selection_color).bold()
