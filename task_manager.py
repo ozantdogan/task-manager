@@ -107,7 +107,6 @@ class TaskManager:
         self.session.add(Task(title=title, description=description, parent_id=get_task.id if get_task else None))
         self.session.commit()
     
-    #TODO: Add subtask support
     def view_task(self, task):
         status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')
         task_title = Text(str(task.title)).bold()
@@ -128,7 +127,6 @@ class TaskManager:
         print(messages.SUBTASKS_MESSAGE)
         self.list_subtasks(task)
 
-              
     #TODO: Add subtask support
     def edit_task(self, get_task=None):
         if not get_task:
@@ -156,6 +154,30 @@ class TaskManager:
 
         self.session.commit()
         print(messages.TASK_EDITED_MESSAGE.format(title=previous_title))
+    
+    def edit_subtask(self, get_task):
+        print(messages.ENTER_EDIT_SUBTASK_MESSAGE)
+        subtask = self.get_task(get_task=get_task)
+        previous_title = subtask.title
+        print(messages.ENTER_NEW_TASK_TITLE_MESSAGE)
+        title = input()
+        if(title == ""):
+            title = subtask.title
+        
+        print(messages.ENTER_NEW_TASK_DESCRIPTION_MESSAGE)
+        description = input()
+        if(description == ""):
+            description = subtask.description
+        elif(description == app_commands.get('CLEAR')):
+            description = ""
+        
+        subtask.title = title
+        subtask.description = description
+        subtask.modifiedon = func.now()
+
+        self.session.commit()
+        print(messages.TASK_EDITED_MESSAGE.format(title=previous_title))
+
 
     #TODO: Add subtask support
     #TODO: If task is completed, mark all subtasks as completed

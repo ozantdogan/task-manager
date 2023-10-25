@@ -44,6 +44,12 @@ EDIT_TASK               = Text('Edit task', color=input_selection_color).bold()
 MARK_TASK               = Text('Mark task', color=input_selection_color).bold()
 DELETE_TASK             = Text('Delete task', color=input_selection_color).bold()
 SORT_TASKS              = Text('Sort tasks', color=input_selection_color).bold()
+
+VIEW_SUBTASK            = Text('View subtask', color=input_selection_color).bold()
+EDIT_SUBTASK            = Text('Edit subtask', color=input_selection_color).bold()
+MARK_SUBTASK            = Text('Mark subtask', color=input_selection_color).bold()
+DELETE_SUBTASK          = Text('Delete subtask', color=input_selection_color).bold()
+
 BACK                    = Text('Back', color=exit_program_color).bold()
 
 SORT_TASKS_OPTIONS = task_messages_color + """Sort tasks by:
@@ -67,6 +73,7 @@ ENTER_TASK_DESCRIPTION_MESSAGE      = input_messages_color + "Enter task descrip
 ENTER_SUBTASK_TITLE_MESSAGE         = input_messages_color + "Enter subtask title (cannot be null): "
 ENTER_SUBTASK_DESCRIPTION_MESSAGE   = input_messages_color + "Enter subtask description: "
 ENTER_EDIT_TASK_MESSAGE             = input_messages_color + "Enter task index to edit: "
+ENTER_EDIT_SUBTASK_MESSAGE          = input_messages_color + "Enter subtask index to edit: "
 ENTER_NEW_TASK_TITLE_MESSAGE        = input_messages_color + "Enter new task title: "
 ENTER_NEW_TASK_DESCRIPTION_MESSAGE  = input_messages_color + f"Enter new task description (Type {app_commands.get('CLEAR')} to clear description): "
 ENTER_MARK_TASK_MESSAGE             = input_messages_color + f"Enter task index to mark (Type {app_commands.get('ALL')} to mark all): "
@@ -74,6 +81,7 @@ ENTER_DELETE_TASK_MESSAGE           = input_messages_color + f"Enter task index 
 CONFIRM_DELETE_ALL_TASKS_MESSAGE    = input_messages_color + "Are you sure you want to delete all tasks? (Y/n): "
 ENTER_SORT_TASKS_MESSAGE            = input_messages_color + "Enter sort option: "
 ENTER_VIEW_TASK_MESSAGE             = input_messages_color + "Enter task index to view: "
+
 
 ## task messages
 TASK_ADDED_MESSAGE                      = task_messages_color + "➕ Task '{title}' added."
