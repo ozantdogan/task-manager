@@ -53,24 +53,25 @@ class TaskManager:
     def get_db_name(self):
         return self.session.bind.url.database
     
-    def list_tasks(self):
-        tasks = tasks = self.session.query(Task).filter(Task.parent_id == None).order_by(self.sort_order(self.sortby)).all()
-        if not tasks:
+    def list_tasks(self, parent_id=None, level=0):
+        tasks = self.session.query(Task).filter(Task.parent_id == parent_id).order_by(self.sort_order(self.sortby)).all()
+        if not tasks and level == 0:
             print(messages.NO_TASKS_FOUND_MESSAGE)
         else:
-            self.task_db_ids = {index: task.id for index, task in enumerate(tasks, start=1)}
+            self.index_tasks(tasks, parent_id)
             for index, task in enumerate(tasks, start=1):
                 task_status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')
                 task_title = Text(str(task.title)).bold()
                 task_description = f" [...]" if task.description.strip() else ""
-                print(f" {index}{task_status} {task_title}{task_description}")
-                subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()
-                if subtasks:
-                    for subtask in subtasks:
-                        subtask_status = app_icons.get('COMPLETED') if subtask.is_completed else app_icons.get('NOT_COMPLETED')
-                        subtask_description = f" [...]" if subtask.description.strip() else ""
-                        print(f"  |_ {subtask_status} {subtask.title}{subtask_description}")
-                    print("")
+                prefix = "└─" if level >= 1 else ""
+                print(f"{' ' * level}{prefix} {index}{task_status} {task_title}{task_description}")
+                self.list_tasks(parent_id=task.id, level=level+2)
+    
+    def index_tasks(self, tasks, parent_id=None):
+        if parent_id is None:
+            self.task_db_ids = {index: task.id for index, task in enumerate(tasks, start=1)}
+        else:
+            self.subtask_db_ids = {index: task.id for index, task in enumerate(tasks, start=1)}
 
     def list_subtasks(self, task):
         self.subtask_db_ids.clear()
@@ -210,6 +211,7 @@ class TaskManager:
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
     
+    #TODO: if 'ALL' entered as an input then mark all the subtasks of the task
     def mark_subtask(self, get_task):
         print(messages.ENTER_MARK_SUBTASK_MESSAGE)
         subtask = self.get_task(get_task=get_task)
@@ -252,10 +254,12 @@ class TaskManager:
         
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
-        
+    
+    #TODO: if 'ALL' entered as an input then delete all the subtasks of the task 
     def delete_subtask(self, get_task):
         print(messages.ENTER_DELETE_SUBTASK_MESSAGE)
         subtask = self.get_task(get_task=get_task)
+        self.delete_all_subtasks(subtask)
         self.session.delete(subtask)
         self.session.commit()
         print(messages.TASK_DELETED_MESSAGE.format(deleted_task=subtask.title))

@@ -49,7 +49,7 @@ class Menu:
 
                         elif choice == messages.DELETE_TASK:
                             self.task_manager.delete_task(get_task=self.selected_task)
-                            if(self.selected_task.parent_id is not None):
+                            if(self.selected_task != None and self.selected_task.parent_id is not None):
                                 self.selected_task = self.task_manager.get_task_by_id(self.selected_task.parent_id)
                             else:
                                 self.view = 'list'
@@ -95,6 +95,8 @@ class Menu:
                         else:
                             print(messages.PRESS_ENTER_MESSAGE)
                             input()
+                    else:
+                        raise ValueError(messages.INVALID_CHOICE_MESSAGE)
                 else:
                     raise ValueError(messages.INVALID_CHOICE_MESSAGE)
                 
