@@ -5,7 +5,7 @@ import messages
 
 class Menu:
     def __init__(self, task_manager):
-        self.current_view = 'list'
+        self.view = 'list'
         self.task_manager = task_manager
         self.buttons = {}
         self.task_count = task_manager.get_task_count()
@@ -18,9 +18,9 @@ class Menu:
                 os.system("cls")
                 print(messages.TASK_MANAGER_TITLE.format(DB_NAME=self.task_manager.get_db_name()) + '\n')
 
-                if self.current_view == 'list':
+                if self.view == 'list':
                     self.list_view()
-                elif self.current_view == 'task':
+                elif self.view == 'task':
                     self.task_view()
                 print(messages.SEPARATOR_LINE)
                 self.buttons_menu()
@@ -37,19 +37,18 @@ class Menu:
                         task = self.task_manager.get_task()
                         if task:
                             self.selected_task = task
-                            self.current_view = 'task'
+                            self.view = 'task'
                             
                     elif choice == messages.EDIT_TASK:
-                        print(messages.ENTER_EDIT_TASK_MESSAGE)
-                        self.task_manager.edit_task()
+                        self.task_manager.edit_task(get_task=self.selected_task)
 
                     elif choice == messages.MARK_TASK:
-                        print(messages.ENTER_MARK_TASK_MESSAGE)
-                        self.task_manager.mark_task()
+                        self.task_manager.mark_task(get_task=self.selected_task)
 
                     elif choice == messages.DELETE_TASK:
-                        print(messages.ENTER_DELETE_TASK_MESSAGE)
-                        self.task_manager.delete_task()
+                        self.task_manager.delete_task(get_task=self.selected_task)
+                        self.view = 'list'
+                        self.selected_task = None
 
                     elif choice == messages.SORT_TASKS:
                         print(messages.SORT_TASKS_OPTIONS)
@@ -57,7 +56,7 @@ class Menu:
                         self.task_manager.sort_tasks()
 
                     elif choice == messages.BACK:
-                        self.current_view = 'list'
+                        self.view = 'list'
                         self.selected_task = None
 
                     elif choice == messages.DISCONNECT_PROGRAM:
@@ -89,7 +88,7 @@ class Menu:
     def buttons_menu(self):
         self.buttons.clear()
         i = 1
-        if self.current_view == 'list':
+        if self.view == 'list':
             self.buttons = {}
             self.buttons[i] = messages.CREATE_TASK
             if self.task_count > 0:
@@ -105,8 +104,15 @@ class Menu:
                 i += 1
                 self.buttons[i] = messages.SORT_TASKS
             
-        elif self.current_view == 'task':
+        elif self.view == 'task':
             self.buttons[i] = messages.BACK
+            i += 1
+            self.buttons[i] = messages.EDIT_TASK
+            i += 1
+            self.buttons[i] = messages.MARK_TASK
+            i += 1
+            self.buttons[i] = messages.DELETE_TASK
+
 
         self.buttons[0] = messages.DISCONNECT_PROGRAM
         for key, value in self.buttons.items():

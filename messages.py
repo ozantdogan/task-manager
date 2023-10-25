@@ -37,16 +37,13 @@ TASK_MANAGER_TITLE      = task_manager_title_color + '{DB_NAME}'
 SEPARATOR_LINE          = '----------------------------------------------'
 EXIT_PROGRAM            = Text('(Press Ctrl+C to terminate)', color=program_messages_color)
 DISCONNECT_PROGRAM      = Text('Disconnect', color=exit_program_color)
-CREATE_TASK             = Text('New task', color=input_selection_color).bold()
-VIEW_TASK               = Text('View task', color=input_selection_color).bold()
-EDIT_TASK               = Text('Edit task', color=input_selection_color).bold()
-MARK_TASK               = Text('Mark task', color=input_selection_color).bold()
-DELETE_TASK             = Text('Delete task', color=input_selection_color).bold()
-SORT_TASKS              = Text('Sort tasks', color=input_selection_color).bold()
-BACK                    = Text('Back', color=input_selection_color).bold()
-
-
-
+CREATE_TASK             = Text('New', color=input_selection_color).bold()
+VIEW_TASK               = Text('View', color=input_selection_color).bold()
+EDIT_TASK               = Text('Edit', color=input_selection_color).bold()
+MARK_TASK               = Text('Mark', color=input_selection_color).bold()
+DELETE_TASK             = Text('Delete', color=input_selection_color).bold()
+SORT_TASKS              = Text('Sort', color=input_selection_color).bold()
+BACK                    = Text('Back', color=exit_program_color).bold()
 
 SORT_TASKS_OPTIONS = task_messages_color + """Sort tasks by:
     1. Alphabetical order

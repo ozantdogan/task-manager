@@ -71,8 +71,12 @@ class TaskManager:
             modifiedon_text = Text(f"Last modified: {task.modifiedon.strftime('%d %b %Y %I:%M %p')}", color=colors.get('program_messages_color')).bold_italic()
             print(f"{modifiedon_text}")
 
-    def edit_task(self):
-        task = self.get_task()
+    def edit_task(self, get_task=None):
+        if not get_task:
+            print(messages.ENTER_EDIT_TASK_MESSAGE)
+            task = self.get_task()
+        else:
+            task = get_task
 
         previous_title = task.title
         print(messages.ENTER_NEW_TASK_TITLE_MESSAGE)
@@ -94,8 +98,13 @@ class TaskManager:
         self.session.commit()
         print(messages.TASK_EDITED_MESSAGE.format(title=previous_title))
 
-    def mark_task(self):
-        task = self.get_task(commands=True)
+    def mark_task(self, get_task=None):
+        if not get_task:
+            print(messages.ENTER_MARK_TASK_MESSAGE)
+            task = self.get_task(commands=True)
+        else:
+            task = get_task
+
         if task == app_commands.get('ALL'):
             uncompleted_tasks = self.session.query(Task).filter_by(is_completed=False).all()
             if uncompleted_tasks:
@@ -121,8 +130,13 @@ class TaskManager:
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
             
-    def delete_task(self):
-        task = self.get_task(commands=True)
+    def delete_task(self, get_task=None):
+        if not get_task:
+            print(messages.ENTER_DELETE_TASK_MESSAGE)
+            task = self.get_task(commands=True)
+        else:
+            task = get_task
+
         if task == app_commands.get('ALL'):
             print(messages.CONFIRM_DELETE_ALL_TASKS_MESSAGE)
             confirm = input()
