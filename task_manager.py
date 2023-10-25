@@ -177,9 +177,6 @@ class TaskManager:
         self.session.commit()
         print(messages.TASK_EDITED_MESSAGE.format(title=previous_title))
 
-
-    #TODO: Add subtask support
-    #TODO: If task is completed, mark all subtasks as completed
     def mark_task(self, get_task=None):
         if not get_task:
             print(messages.ENTER_MARK_TASK_MESSAGE)
@@ -204,27 +201,33 @@ class TaskManager:
                 print(messages.ALL_TASKS_MARKED_NOT_COMPLETED_MESSAGE)
         
         elif isinstance(task, Task):
+            self.mark_all_subtasks(task, not task.is_completed)
             task.is_completed = not task.is_completed
-
-            for subtask in self.session.query(Task).filter(Task.parent_id == task.id).all():
-                subtask.is_completed = task.is_completed
-                subtask.modifiedon = func.now()
-
             task.modifiedon = func.now()
             self.session.commit()
             print(messages.TASK_MARKED_MESSAGE.format(title=task.title, is_completed='completed' if task.is_completed else 'not completed'))
             
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
-        
+    
     def mark_subtask(self, get_task):
         print(messages.ENTER_MARK_SUBTASK_MESSAGE)
         subtask = self.get_task(get_task=get_task)
+        self.mark_all_subtasks(subtask, not subtask.is_completed)
         subtask.is_completed = not subtask.is_completed
         subtask.modifiedon = func.now()
         self.session.commit()
         print(messages.TASK_MARKED_MESSAGE.format(title=subtask.title, is_completed='completed' if subtask.is_completed else 'not completed'))
     
+    def mark_all_subtasks(self, task, is_completed):
+        subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()
+        if subtasks:
+            for subtask in subtasks:
+                self.mark_all_subtasks(subtask, is_completed)
+                subtask.is_completed = is_completed
+                subtask.modifiedon = func.now()
+            self.session.commit()
+
     def delete_task(self, get_task=None):
         if not get_task:
             print(messages.ENTER_DELETE_TASK_MESSAGE)
@@ -242,7 +245,7 @@ class TaskManager:
                 print(messages.ALL_TASKS_DELETED_MESSAGE)
 
         elif isinstance(task, Task):
-            self.delete_subtasks(task)
+            self.delete_all_subtasks(task)
             self.session.delete(task)
             self.session.commit()
             print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
@@ -257,11 +260,11 @@ class TaskManager:
         self.session.commit()
         print(messages.TASK_DELETED_MESSAGE.format(deleted_task=subtask.title))
 
-    def delete_subtasks(self, task):
+    def delete_all_subtasks(self, task):
         subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()
         if subtasks:
             for subtask in subtasks:
-                self.delete_subtasks(subtask)
+                self.delete_all_subtasks(subtask)
                 self.session.delete(subtask)
             self.session.commit()
 
