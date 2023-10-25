@@ -242,6 +242,7 @@ class TaskManager:
                 print(messages.ALL_TASKS_DELETED_MESSAGE)
 
         elif isinstance(task, Task):
+            self.delete_subtasks(task)
             self.session.delete(task)
             self.session.commit()
             print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
@@ -255,6 +256,14 @@ class TaskManager:
         self.session.delete(subtask)
         self.session.commit()
         print(messages.TASK_DELETED_MESSAGE.format(deleted_task=subtask.title))
+
+    def delete_subtasks(self, task):
+        subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()
+        if subtasks:
+            for subtask in subtasks:
+                self.delete_subtasks(subtask)
+                self.session.delete(subtask)
+            self.session.commit()
 
     def sort_tasks(self):
         index = int(input())
