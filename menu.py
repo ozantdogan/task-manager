@@ -2,13 +2,14 @@ import os
 import time
 import messages
 
-
 class Menu:
     def __init__(self, task_manager):
         self.view = 'list'
         self.task_manager = task_manager
         self.buttons = {}
+        self.task_buttons = {}
         self.subtask_buttons = {}
+        self.exit_buttons = {}
         self.selected_task = None
         self.disconnect = False
 
@@ -105,48 +106,61 @@ class Menu:
         
         i = 1
         if self.view == 'list':
-            self.buttons = {}
-            self.buttons[i] = messages.CREATE_TASK
+            self.task_buttons = {}
+            self.task_buttons[i] = messages.CREATE_TASK
             if task_count > 0:
                 i += 1
-                self.buttons[i] = messages.VIEW_TASK
+                self.task_buttons[i] = messages.VIEW_TASK
                 i += 1
-                self.buttons[i] = messages.EDIT_TASK
+                self.task_buttons[i] = messages.EDIT_TASK
                 i += 1
-                self.buttons[i] = messages.MARK_TASK
+                self.task_buttons[i] = messages.MARK_TASK
                 i += 1
-                self.buttons[i] = messages.DELETE_TASK
+                self.task_buttons[i] = messages.DELETE_TASK
             if task_count > 1:
                 i += 1
-                self.buttons[i] = messages.SORT_TASKS
+                self.task_buttons[i] = messages.SORT_TASKS
             
         elif self.view == 'task':
             
-            self.buttons[i] = messages.CREATE_TASK
+            self.task_buttons[i] = messages.CREATE_TASK
             i += 1
-            self.buttons[i] = messages.EDIT_TASK
+            self.task_buttons[i] = messages.EDIT_TASK
             i += 1
-            self.buttons[i] = messages.MARK_TASK
+            self.task_buttons[i] = messages.MARK_TASK
             i += 1
-            self.buttons[i] = messages.DELETE_TASK
+            self.task_buttons[i] = messages.DELETE_TASK
             i += 1
 
             has_subtasks = self.task_manager.has_subtasks(self.selected_task)
             if has_subtasks:
-                self.buttons[i] = messages.VIEW_SUBTASK
+                self.subtask_buttons[i] = messages.VIEW_SUBTASK
                 i += 1
-                self.buttons[i] = messages.EDIT_SUBTASK
+                self.subtask_buttons[i] = messages.EDIT_SUBTASK
                 i += 1
-                self.buttons[i] = messages.MARK_SUBTASK
+                self.subtask_buttons[i] = messages.MARK_SUBTASK
                 i += 1
-                self.buttons[i] = messages.DELETE_SUBTASK
+                self.subtask_buttons[i] = messages.DELETE_SUBTASK
                 i += 1
 
-            self.buttons[i] = messages.BACK
-            
+            self.exit_buttons[9] = messages.BACK
+        self.exit_buttons[0] = messages.DISCONNECT_PROGRAM
 
-        self.buttons[0] = messages.DISCONNECT_PROGRAM
-        for key, value in self.buttons.items():
+        for key, value in self.task_buttons.items():
             print(str(key) + ':' + str(value))
+        print("")    
+        for key, value in self.subtask_buttons.items():
+            print(str(key) + ':' + str(value))
+        print("")
+        for key, value in self.exit_buttons.items():
+            print(str(key) + ':' + str(value))
+        
+        self.buttons.update(self.task_buttons)
+        self.buttons.update(self.subtask_buttons)
+        self.buttons.update(self.exit_buttons)
+
+        self.task_buttons.clear()
+        self.subtask_buttons.clear()
+        self.exit_buttons.clear()
 
         
