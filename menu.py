@@ -70,6 +70,9 @@ class Menu:
                         elif choice == messages.MARK_SUBTASK:
                             self.task_manager.mark_subtask(get_task=self.selected_task)
 
+                        elif choice == messages.DELETE_SUBTASK:
+                            self.task_manager.delete_subtask(get_task=self.selected_task)
+
                         elif choice == messages.BACK:
                             if self.selected_task.parent_id is not None:
                                 self.selected_task = self.task_manager.get_task_by_id(self.selected_task.parent_id)

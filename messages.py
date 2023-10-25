@@ -72,19 +72,21 @@ ENTER_DATABASE_PORT             = Text('Database port: ', color=input_selection_
 ## input messages
 ENTER_TASK_TITLE_MESSAGE            = input_messages_color + "Enter task title (cannot be null): "
 ENTER_TASK_DESCRIPTION_MESSAGE      = input_messages_color + "Enter task description: "
-ENTER_SUBTASK_TITLE_MESSAGE         = input_messages_color + "Enter subtask title (cannot be null): "
-ENTER_SUBTASK_DESCRIPTION_MESSAGE   = input_messages_color + "Enter subtask description: "
 ENTER_EDIT_TASK_MESSAGE             = input_messages_color + "Enter task index to edit: "
-ENTER_EDIT_SUBTASK_MESSAGE          = input_messages_color + "Enter subtask index to edit: "
 ENTER_NEW_TASK_TITLE_MESSAGE        = input_messages_color + "Enter new task title: "
 ENTER_NEW_TASK_DESCRIPTION_MESSAGE  = input_messages_color + f"Enter new task description (Type {app_commands.get('CLEAR')} to clear description): "
 ENTER_MARK_TASK_MESSAGE             = input_messages_color + f"Enter task index to mark (Type {app_commands.get('ALL')} to mark all): "
-ENTER_MARK_SUBTASK_MESSAGE          = input_messages_color + f"Enter subtask index to mark (Type {app_commands.get('ALL')} to mark all): "
 ENTER_DELETE_TASK_MESSAGE           = input_messages_color + f"Enter task index to delete (Type {app_commands.get('ALL')} to delete all): "
 CONFIRM_DELETE_ALL_TASKS_MESSAGE    = input_messages_color + "Are you sure you want to delete all tasks? (Y/n): "
 ENTER_SORT_TASKS_MESSAGE            = input_messages_color + "Enter sort option: "
 ENTER_VIEW_TASK_MESSAGE             = input_messages_color + "Enter task index to view: "
 
+## input messages (subtasks)
+ENTER_SUBTASK_TITLE_MESSAGE         = input_messages_color + "Enter subtask title (cannot be null): "
+ENTER_SUBTASK_DESCRIPTION_MESSAGE   = input_messages_color + "Enter subtask description: "
+ENTER_EDIT_SUBTASK_MESSAGE          = input_messages_color + "Enter subtask index to edit: "
+ENTER_MARK_SUBTASK_MESSAGE          = input_messages_color + f"Enter subtask index to mark (Type {app_commands.get('ALL')} to mark all): "
+ENTER_DELETE_SUBTASK_MESSAGE        = input_messages_color + f"Enter subtask index to delete (Type {app_commands.get('ALL')} to delete all): "
 
 ## task messages
 TASK_ADDED_MESSAGE                      = task_messages_color + "➕ Task '{title}' added."

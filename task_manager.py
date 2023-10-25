@@ -225,7 +225,6 @@ class TaskManager:
         self.session.commit()
         print(messages.TASK_MARKED_MESSAGE.format(title=subtask.title, is_completed='completed' if subtask.is_completed else 'not completed'))
     
-    #TODO: Add subtask support
     def delete_task(self, get_task=None):
         if not get_task:
             print(messages.ENTER_DELETE_TASK_MESSAGE)
@@ -249,6 +248,13 @@ class TaskManager:
         
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
+        
+    def delete_subtask(self, get_task):
+        print(messages.ENTER_DELETE_SUBTASK_MESSAGE)
+        subtask = self.get_task(get_task=get_task)
+        self.session.delete(subtask)
+        self.session.commit()
+        print(messages.TASK_DELETED_MESSAGE.format(deleted_task=subtask.title))
 
     def sort_tasks(self):
         index = int(input())
