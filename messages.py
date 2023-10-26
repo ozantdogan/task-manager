@@ -86,6 +86,8 @@ ENTER_VIEW_TASK_MESSAGE             = input_messages_color + "Enter task index t
 ENTER_SUBTASK_TITLE_MESSAGE         = subtask_messages_color + "Enter subtask title (cannot be null): "
 ENTER_SUBTASK_DESCRIPTION_MESSAGE   = subtask_messages_color + "Enter subtask description: "
 ENTER_EDIT_SUBTASK_MESSAGE          = subtask_messages_color + "Enter subtask index to edit: "
+ENTER_NEW_SUBTASK_TITLE_MESSAGE     = subtask_messages_color + "Enter new subtask title: "
+ENTER_NEW_SUBTASK_DESCRIPTION_MESSAGE = subtask_messages_color + f"Enter new subtask description (Type {app_commands.get('CLEAR')} to clear description): "
 ENTER_MARK_SUBTASK_MESSAGE          = subtask_messages_color + f"Enter subtask index to mark (Type {app_commands.get('ALL')} to mark all): "
 ENTER_DELETE_SUBTASK_MESSAGE        = subtask_messages_color + f"Enter subtask index to delete (Type {app_commands.get('ALL')} to delete all): "
 

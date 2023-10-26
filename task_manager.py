@@ -61,9 +61,10 @@ class TaskManager:
             self.index_tasks(tasks, parent_id)
             for index, task in enumerate(tasks, start=1):
                 task_status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')
-                task_title = Text(str(task.title)).bold()
+                task_title = Text(str(task.title)).bold() if self.has_subtasks(task) else Text(str(task.title))
                 task_description = f" [...]" if task.description.strip() else ""
                 prefix = "└─" if level >= 1 else ""
+                print("") if level == 0 else None
                 print(f"{' ' * level}{prefix} {index}{task_status} {task_title}{task_description}")
                 self.list_tasks(parent_id=task.id, level=level+2)
     
@@ -159,12 +160,12 @@ class TaskManager:
         print(messages.ENTER_EDIT_SUBTASK_MESSAGE)
         subtask = self.get_task(get_task=get_task)
         previous_title = subtask.title
-        print(messages.ENTER_NEW_TASK_TITLE_MESSAGE)
+        print(messages.ENTER_NEW_SUBTASK_TITLE_MESSAGE)
         title = input()
         if(title == ""):
             title = subtask.title
         
-        print(messages.ENTER_NEW_TASK_DESCRIPTION_MESSAGE)
+        print(messages.ENTER_NEW_SUBTASK_DESCRIPTION_MESSAGE)
         description = input()
         if(description == ""):
             description = subtask.description
