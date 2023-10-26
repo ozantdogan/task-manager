@@ -54,6 +54,7 @@ VIEW_SUBTASK            = Text('View subtask', color=subtask_selection_color).bo
 EDIT_SUBTASK            = Text('Edit subtask', color=subtask_selection_color).bold()
 MARK_SUBTASK            = Text('Mark subtask', color=subtask_selection_color).bold()
 DELETE_SUBTASK          = Text('Delete subtask', color=subtask_selection_color).bold()
+SORT_SUBTASKS           = Text('Sort subtasks', color=subtask_selection_color).bold()
 
 BACK                    = Text('Back', color=exit_program_color).bold()
 
@@ -106,6 +107,7 @@ ENTER_NEW_SUBTASK_DESCRIPTION_MESSAGE   = subtask_input_messages_color + f"Enter
 ENTER_MARK_SUBTASK_MESSAGE              = subtask_input_messages_color + f"Enter subtask index to mark: "
 ENTER_DELETE_SUBTASK_MESSAGE            = subtask_input_messages_color + f"Enter subtask index to delete (Type {app_commands.get('ALL')} to delete all): "
 ENTER_VIEW_SUBTASK_MESSAGE              = subtask_input_messages_color + "Enter subtask index to view: "
+ENTER_SORT_SUBTASKS_MESSAGE             = subtask_input_messages_color + "Enter sort option: "
 
 ##subtask messages
 SUBTASK_ADDED_MESSAGE                   = subtask_messages_color + "➕ Subtask '{title}' added."

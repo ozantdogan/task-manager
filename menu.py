@@ -76,6 +76,11 @@ class Menu:
                         elif choice == messages.DELETE_SUBTASK:
                             self.task_manager.delete_subtask(get_task=self.selected_task)
 
+                        elif choice == messages.SORT_SUBTASKS:
+                            print(messages.SORT_TASKS_OPTIONS)
+                            print(messages.ENTER_SORT_SUBTASKS_MESSAGE)
+                            self.task_manager.sort_subtasks()
+
                         elif choice == messages.BACK:
                             if self.selected_task.parent_id is not None:
                                 self.selected_task = self.task_manager.get_task_by_id(self.selected_task.parent_id)
@@ -136,6 +141,7 @@ class Menu:
             if task_count > 1:
                 i += 1
                 self.task_buttons[i] = messages.SORT_TASKS
+            self.exit_buttons[0] = messages.DISCONNECT_PROGRAM
             
         elif self.view == 'task':
             
@@ -149,8 +155,8 @@ class Menu:
             self.subtask_buttons[i] = messages.CREATE_SUBTASK
             i += 1
 
-            has_subtasks = self.task_manager.has_subtasks(self.selected_task)
-            if has_subtasks:
+            subtask_count = self.task_manager.get_subtask_count(self.selected_task)
+            if subtask_count > 0:
                 
                 self.subtask_buttons[i] = messages.VIEW_SUBTASK
                 i += 1
@@ -160,10 +166,12 @@ class Menu:
                 i += 1
                 self.subtask_buttons[i] = messages.DELETE_SUBTASK
                 i += 1
+                if subtask_count > 1:
+                    self.subtask_buttons[i] = messages.SORT_SUBTASKS
+                    i += 1
 
-            self.exit_buttons[9] = messages.BACK
-        self.exit_buttons[0] = messages.DISCONNECT_PROGRAM
-
+            self.exit_buttons[0] = messages.BACK
+        
         for key, value in self.task_buttons.items():
             print(str(key) + ':' + str(value))
         print("")    

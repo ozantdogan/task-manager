@@ -8,8 +8,10 @@ class TaskManager:
     def __init__(self, session):
         self.task_db_ids = {}
         self.subtask_db_ids = {}
-        self.sortby = Task.createdon
-        self.sort_order = asc
+        self.task_sortby = Task.createdon
+        self.task_sort_order = asc
+        self.subtask_sortby = Task.createdon
+        self.subtask_sort_order = asc
         self.session = session
 
     def get_task(self, commands=False, get_task=None):
@@ -50,11 +52,14 @@ class TaskManager:
         else:
             return False
         
+    def get_subtask_count(self, task):
+        return self.session.query(Task).filter(Task.parent_id == task.id).count()
+        
     def get_db_name(self):
         return self.session.bind.url.database
     
     def list_tasks(self, parent_id=None, level=0):
-        tasks = self.session.query(Task).filter(Task.parent_id == parent_id).order_by(self.sort_order(self.sortby)).all()
+        tasks = self.session.query(Task).filter(Task.parent_id == parent_id).order_by(self.task_sort_order(self.task_sortby)).all()
         if not tasks and level == 0:
             print(messages.NO_TASKS_FOUND_MESSAGE)
         else:
@@ -73,20 +78,6 @@ class TaskManager:
             self.task_db_ids = {index: task.id for index, task in enumerate(tasks, start=1)}
         else:
             self.subtask_db_ids = {index: task.id for index, task in enumerate(tasks, start=1)}
-
-    def list_subtasks(self, task):
-        self.subtask_db_ids.clear()
-        subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()
-        if subtasks:
-            self.subtask_db_ids = {index: subtask.id for index, subtask in enumerate(subtasks, start=1)}
-            for index, subtask in enumerate(subtasks, start=1):
-                subtask_status = app_icons.get('COMPLETED') if subtask.is_completed else app_icons.get('NOT_COMPLETED')
-                subtask_title = Text(str(subtask.title)).bold()
-                subtask_description = f" [...]" if subtask.description.strip() else ""
-                print(f" {index}{subtask_status} {subtask_title}{subtask_description}")
-
-        else:
-            print(messages.NO_TASKS_FOUND_MESSAGE)
 
     def add_task(self, get_task=None):
         if get_task:
@@ -127,7 +118,21 @@ class TaskManager:
 
         print(messages.SEPARATOR_LINE)
         print(messages.SUBTASKS_MESSAGE)
+
         self.list_subtasks(task)
+
+    def list_subtasks(self, task):
+        subtasks = self.session.query(Task).filter(Task.parent_id == task.id).order_by(self.subtask_sort_order(self.subtask_sortby)).all()
+        if subtasks:
+            self.subtask_db_ids = {index: subtask.id for index, subtask in enumerate(subtasks, start=1)}
+            for index, subtask in enumerate(subtasks, start=1):
+                subtask_status = app_icons.get('COMPLETED') if subtask.is_completed else app_icons.get('NOT_COMPLETED')
+                subtask_title = Text(str(subtask.title)).bold()
+                subtask_description = f" [...]" if subtask.description.strip() else ""
+                print(f" {index}{subtask_status} {subtask_title}{subtask_description}")
+
+        else:
+            print(messages.NO_TASKS_FOUND_MESSAGE)
 
     def edit_task(self, get_task=None):
         if not get_task:
@@ -254,9 +259,9 @@ class TaskManager:
                     self.delete_all_subtasks(task)
                     self.session.delete(task)
                     self.session.commit()
-            else:
-                self.session.delete(task)
-                self.session.commit()
+                else:
+                    self.session.delete(task)
+                    self.session.commit()
             print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
         
         else:
@@ -293,14 +298,28 @@ class TaskManager:
     def sort_tasks(self):
         index = int(input())
         if index == 1:
-            self.sortby = Task.title
+            self.task_sortby = Task.title
         elif index == 2:
-            self.sortby = Task.createdon
+            self.task_sortby = Task.createdon
         elif index == 3:
-            self.sortby = Task.modifiedon
+            self.task_sortby = Task.modifiedon
         elif index == 4:
-            self.sortby = Task.is_completed
+            self.task_sortby = Task.is_completed
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
-        self.sort_order = desc if self.sort_order == asc else asc
+        self.task_sort_order = desc if self.task_sort_order == asc else asc
+
+    def sort_subtasks(self):
+        index = int(input())
+        if index == 1:
+            self.subtask_sortby = Task.title
+        elif index == 2:
+            self.subtask_sortby = Task.createdon
+        elif index == 3:
+            self.subtask_sortby = Task.modifiedon
+        elif index == 4:
+            self.subtask_sortby = Task.is_completed
+        else:
+            raise ValueError(messages.INVALID_CHOICE_MESSAGE)
+        self.subtask_sort_order = desc if self.subtask_sort_order == asc else asc
             
