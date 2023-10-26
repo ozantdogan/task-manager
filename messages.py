@@ -15,6 +15,7 @@ task_messages_color = colors.get('task_messages_color')
 program_messages_color = colors.get('program_messages_color')
 error_color = colors.get('error_color')
 line_color = colors.get('line_color')
+disconnect_program_color = colors.get('disconnect_program_color')
 
 program_messages_style = styles.get('program_messages_style')
 
@@ -81,15 +82,16 @@ ENTER_DELETE_TASK_MESSAGE           = input_messages_color + f"Enter task index 
 CONFIRM_DELETE_ALL_TASKS_MESSAGE    = input_messages_color + "Are you sure you want to delete all tasks? (Y/n): "
 ENTER_SORT_TASKS_MESSAGE            = input_messages_color + "Enter sort option: "
 ENTER_VIEW_TASK_MESSAGE             = input_messages_color + "Enter task index to view: "
+CONFIRM_DISCONNECT_MESSAGE          = Text("Are you sure you want to disconnect from the database? (Y/n): ", color=disconnect_program_color).underline()
 
 ## input messages (subtasks)
-ENTER_SUBTASK_TITLE_MESSAGE         = subtask_messages_color + "Enter subtask title (cannot be null): "
-ENTER_SUBTASK_DESCRIPTION_MESSAGE   = subtask_messages_color + "Enter subtask description: "
-ENTER_EDIT_SUBTASK_MESSAGE          = subtask_messages_color + "Enter subtask index to edit: "
-ENTER_NEW_SUBTASK_TITLE_MESSAGE     = subtask_messages_color + "Enter new subtask title: "
-ENTER_NEW_SUBTASK_DESCRIPTION_MESSAGE = subtask_messages_color + f"Enter new subtask description (Type {app_commands.get('CLEAR')} to clear description): "
-ENTER_MARK_SUBTASK_MESSAGE          = subtask_messages_color + f"Enter subtask index to mark (Type {app_commands.get('ALL')} to mark all): "
-ENTER_DELETE_SUBTASK_MESSAGE        = subtask_messages_color + f"Enter subtask index to delete (Type {app_commands.get('ALL')} to delete all): "
+ENTER_SUBTASK_TITLE_MESSAGE             = subtask_messages_color + "Enter subtask title (cannot be null): "
+ENTER_SUBTASK_DESCRIPTION_MESSAGE       = subtask_messages_color + "Enter subtask description: "
+ENTER_EDIT_SUBTASK_MESSAGE              = subtask_messages_color + "Enter subtask index to edit: "
+ENTER_NEW_SUBTASK_TITLE_MESSAGE         = subtask_messages_color + "Enter new subtask title: "
+ENTER_NEW_SUBTASK_DESCRIPTION_MESSAGE   = subtask_messages_color + f"Enter new subtask description (Type {app_commands.get('CLEAR')} to clear description): "
+ENTER_MARK_SUBTASK_MESSAGE              = subtask_messages_color + f"Enter subtask index to mark (Type {app_commands.get('ALL')} to mark all): "
+ENTER_DELETE_SUBTASK_MESSAGE            = subtask_messages_color + f"Enter subtask index to delete (Type {app_commands.get('ALL')} to delete all): "
 
 ## task messages
 TASK_ADDED_MESSAGE                      = task_messages_color + "➕ Task '{title}' added."

@@ -49,7 +49,8 @@ colors = {
     'task_messages_color': Fore.LIGHTMAGENTA_EX,
     'program_messages_color': Fore.LIGHTBLACK_EX,
     'error_color': Fore.RED,
-    'line_color': Fore.MAGENTA
+    'line_color': Fore.MAGENTA,
+    'disconnect_program_color': Fore.BLACK + Back.LIGHTRED_EX
 }
 
 styles = {
