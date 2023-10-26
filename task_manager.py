@@ -212,7 +212,6 @@ class TaskManager:
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
     
-    #TODO: if 'ALL' entered as an input then mark all the subtasks of the task
     def mark_subtask(self, get_task):
         print(messages.ENTER_MARK_SUBTASK_MESSAGE)
         subtask = self.get_task(get_task=get_task)
