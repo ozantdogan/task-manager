@@ -34,7 +34,7 @@ class Menu:
                         if choice == messages.CREATE_TASK or choice == messages.CREATE_SUBTASK:
                             self.task_manager.add_task(get_task=self.selected_task)
 
-                        elif choice == messages.VIEW_TASK or choice == messages.VIEW_SUBTASK:
+                        elif choice == messages.VIEW_TASK:
                             print(messages.ENTER_VIEW_TASK_MESSAGE)
                             task = self.task_manager.get_task(get_task=self.selected_task)
                             if task:
@@ -61,7 +61,7 @@ class Menu:
                             self.task_manager.sort_tasks()
 
                         elif choice == messages.VIEW_SUBTASK:
-                            print(messages.ENTER_VIEW_TASK_MESSAGE)
+                            print(messages.ENTER_VIEW_SUBTASK_MESSAGE)
                             task = self.task_manager.get_task(get_task=self.selected_task)
                             if task:
                                 self.selected_task = task
