@@ -254,9 +254,9 @@ class TaskManager:
                     self.delete_all_subtasks(task)
                     self.session.delete(task)
                     self.session.commit()
-                else:
-                    self.session.delete(task)
-                    self.session.commit()
+            else:
+                self.session.delete(task)
+                self.session.commit()
             print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
         
         else:
