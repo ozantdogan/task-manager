@@ -252,10 +252,11 @@ class TaskManager:
                 confirm = input()
                 if confirm.lower() == "y":
                     self.delete_all_subtasks(task)
+                    self.session.delete(task)
+                    self.session.commit()
                 else:
-                    return
-            self.session.delete(task)
-            self.session.commit()
+                    self.session.delete(task)
+                    self.session.commit()
             print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
         
         else:
@@ -267,8 +268,12 @@ class TaskManager:
         subtask = self.get_task(commands=True, get_task=get_task)
 
         if subtask == app_commands.get('ALL'):
-            self.delete_all_subtasks(get_task)
-            print(messages.ALL_SUBTASKS_DELETED_MESSAGE)
+            print(messages.CONFIRM_DELETE_ALL_SUBTASKS_MESSAGES)
+            confirm = input()
+            if confirm.lower() == "y":
+                get_task = self.get_task(get_task=get_task)
+                self.delete_all_subtasks(get_task)
+                print(messages.ALL_SUBTASKS_DELETED_MESSAGE)
 
         else:
             self.delete_all_subtasks(subtask)
