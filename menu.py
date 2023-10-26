@@ -34,7 +34,7 @@ class Menu:
                         if choice == messages.CREATE_TASK or choice == messages.CREATE_SUBTASK:
                             self.task_manager.add_task(get_task=self.selected_task)
 
-                        elif choice == messages.VIEW_TASK or choice == messages.VIEW_SUBTASK:
+                        elif choice == messages.VIEW_TASK:
                             print(messages.ENTER_VIEW_TASK_MESSAGE)
                             task = self.task_manager.get_task(get_task=self.selected_task)
                             if task:
@@ -61,7 +61,7 @@ class Menu:
                             self.task_manager.sort_tasks()
 
                         elif choice == messages.VIEW_SUBTASK:
-                            print(messages.ENTER_VIEW_TASK_MESSAGE)
+                            print(messages.ENTER_VIEW_SUBTASK_MESSAGE)
                             task = self.task_manager.get_task(get_task=self.selected_task)
                             if task:
                                 self.selected_task = task
@@ -84,11 +84,16 @@ class Menu:
                                 self.selected_task = None
 
                         elif choice == messages.DISCONNECT_PROGRAM:
-                            print(messages.DISCONNECT_MESSAGE)
-                            time.sleep(0.5)
-                            os.system("cls")
-                            self.disconnect = True
-                            return 0
+                            print(messages.CONFIRM_DISCONNECT_MESSAGE)
+                            confirm = input()
+                            if confirm.lower() == 'y':
+                                print(messages.DISCONNECT_MESSAGE)
+                                time.sleep(0.5)
+                                os.system("cls")
+                                self.disconnect = True
+                                return 0
+                            else:
+                                pass
                         
                         if choice == messages.VIEW_TASK or choice == messages.VIEW_SUBTASK or choice == messages.BACK:
                             pass

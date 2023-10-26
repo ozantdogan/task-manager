@@ -61,9 +61,10 @@ class TaskManager:
             self.index_tasks(tasks, parent_id)
             for index, task in enumerate(tasks, start=1):
                 task_status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')
-                task_title = Text(str(task.title)).bold()
+                task_title = Text(str(task.title)).bold() if self.has_subtasks(task) else Text(str(task.title))
                 task_description = f" [...]" if task.description.strip() else ""
                 prefix = "└─" if level >= 1 else ""
+                print("") if level == 0 else None
                 print(f"{' ' * level}{prefix} {index}{task_status} {task_title}{task_description}")
                 self.list_tasks(parent_id=task.id, level=level+2)
     
@@ -159,12 +160,12 @@ class TaskManager:
         print(messages.ENTER_EDIT_SUBTASK_MESSAGE)
         subtask = self.get_task(get_task=get_task)
         previous_title = subtask.title
-        print(messages.ENTER_NEW_TASK_TITLE_MESSAGE)
+        print(messages.ENTER_NEW_SUBTASK_TITLE_MESSAGE)
         title = input()
         if(title == ""):
             title = subtask.title
         
-        print(messages.ENTER_NEW_TASK_DESCRIPTION_MESSAGE)
+        print(messages.ENTER_NEW_SUBTASK_DESCRIPTION_MESSAGE)
         description = input()
         if(description == ""):
             description = subtask.description
@@ -211,7 +212,6 @@ class TaskManager:
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
     
-    #TODO: if 'ALL' entered as an input then mark all the subtasks of the task
     def mark_subtask(self, get_task):
         print(messages.ENTER_MARK_SUBTASK_MESSAGE)
         subtask = self.get_task(get_task=get_task)
@@ -247,22 +247,40 @@ class TaskManager:
                 print(messages.ALL_TASKS_DELETED_MESSAGE)
 
         elif isinstance(task, Task):
-            self.delete_all_subtasks(task)
-            self.session.delete(task)
-            self.session.commit()
+            if self.has_subtasks(task):
+                print(messages.CONFIRM_DELETE_IF_HAS_SUBTASKS_MESSAGE)
+                confirm = input()
+                if confirm.lower() == "y":
+                    self.delete_all_subtasks(task)
+                    self.session.delete(task)
+                    self.session.commit()
+                else:
+                    self.session.delete(task)
+                    self.session.commit()
             print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
         
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
     
     #TODO: if 'ALL' entered as an input then delete all the subtasks of the task 
-    def delete_subtask(self, get_task):
+    def delete_subtask(self, get_task=None):
         print(messages.ENTER_DELETE_SUBTASK_MESSAGE)
-        subtask = self.get_task(get_task=get_task)
-        self.delete_all_subtasks(subtask)
-        self.session.delete(subtask)
-        self.session.commit()
-        print(messages.TASK_DELETED_MESSAGE.format(deleted_task=subtask.title))
+        subtask = self.get_task(commands=True, get_task=get_task)
+
+        if subtask == app_commands.get('ALL'):
+            print(messages.CONFIRM_DELETE_ALL_SUBTASKS_MESSAGES)
+            confirm = input()
+            if confirm.lower() == "y":
+                get_task = self.get_task(get_task=get_task)
+                self.delete_all_subtasks(get_task)
+                print(messages.ALL_SUBTASKS_DELETED_MESSAGE)
+
+        else:
+            self.delete_all_subtasks(subtask)
+            self.session.delete(subtask)
+            self.session.commit()
+            print(messages.TASK_DELETED_MESSAGE.format(deleted_task=subtask.title))
+        
 
     def delete_all_subtasks(self, task):
         subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()

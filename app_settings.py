@@ -45,11 +45,13 @@ colors = {
     'subtask_selection_color': Fore.LIGHTCYAN_EX,
     'exit_program_color': Fore.WHITE,
     'input_messages_color': Fore.YELLOW,
-    'subtask_messages_color': Fore.CYAN,
+    'subtask_input_messages_color': Fore.CYAN,
+    'subtask_messages_color': Fore.LIGHTMAGENTA_EX,
     'task_messages_color': Fore.LIGHTMAGENTA_EX,
     'program_messages_color': Fore.LIGHTBLACK_EX,
     'error_color': Fore.RED,
-    'line_color': Fore.MAGENTA
+    'line_color': Fore.MAGENTA,
+    'disconnect_program_color': Fore.BLACK + Back.LIGHTRED_EX
 }
 
 styles = {
