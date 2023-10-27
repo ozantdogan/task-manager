@@ -16,7 +16,7 @@ subtask_messages_color = colors.get('subtask_messages_color')
 program_messages_color = colors.get('program_messages_color')
 error_color = colors.get('error_color')
 line_color = colors.get('line_color')
-disconnect_program_color = colors.get('disconnect_program_color')
+confirm_exit_color = colors.get('confirm_exit_color')
 
 program_messages_style = styles.get('program_messages_style')
 
@@ -40,8 +40,8 @@ def welcome_message():
 ## menu
 TASK_MANAGER_TITLE      = task_manager_title_color + '{DB_NAME}'
 SEPARATOR_LINE          = Text('----------------------------------------------', color=line_color)
-EXIT_PROGRAM            = Text('(Press Ctrl+C to terminate)', color=program_messages_color)
-DISCONNECT_PROGRAM      = Text('Disconnect', color=exit_program_color)
+TERMINATE_PROGRAM       = Text('(Press Ctrl+C to terminate)', color=program_messages_color)
+
 CREATE_TASK             = Text('New task', color=input_selection_color).bold()
 VIEW_TASK               = Text('View task', color=input_selection_color).bold()
 EDIT_TASK               = Text('Edit task', color=input_selection_color).bold()
@@ -57,6 +57,8 @@ DELETE_SUBTASK          = Text('Delete subtask', color=subtask_selection_color).
 SORT_SUBTASKS           = Text('Sort subtasks', color=subtask_selection_color).bold()
 
 BACK                    = Text('Back', color=exit_program_color).bold()
+
+EXIT                    = Text('Exit', color=exit_program_color).bold()
 
 SORT_TASKS_OPTIONS = task_messages_color + """Sort tasks by:
     1. Alphabetical order
@@ -86,7 +88,7 @@ CONFIRM_DELETE_ALL_TASKS_MESSAGE        = input_messages_color + "Are you sure y
 CONFIRM_DELETE_ALL_SUBTASKS_MESSAGES    = input_messages_color + "Are you sure you want to delete all subtasks? (Y/n): "
 ENTER_SORT_TASKS_MESSAGE                = input_messages_color + "Enter sort option: "
 ENTER_VIEW_TASK_MESSAGE                 = input_messages_color + "Enter task index to view: "
-CONFIRM_DISCONNECT_MESSAGE              = Text("Are you sure you want to disconnect from the database? (Y/n): ", color=disconnect_program_color).underline()
+CONFIRM_EXIT_MESSAGE                    = Text("Are you sure you want to exit the program (Y/n): ", color=confirm_exit_color).underline()
 
 ## task messages
 TASK_ADDED_MESSAGE                      = task_messages_color + "➕ Task '{title}' added."
@@ -121,9 +123,9 @@ SUBTASKS_MESSAGE                = Text("Subtasks:", color=program_messages_color
 CONNECTED_TO_DATABASE_MESSAGE   = Text("(Connected to the database successfully.)", color=program_messages_color).italic()
 NO_TASKS_FOUND_MESSAGE          = Text("(No tasks found.)", color=program_messages_color).italic()
 NO_DESCRIPTION_MESSAGE          = Text("(No description.)", color=program_messages_color).italic()
-DISCONNECT_MESSAGE              = Text("(Disconnected from the database.)", color=program_messages_color).italic()
+EXIT_PROGRAM_MESSAGE            = Text("(Exiting the program...)", color=program_messages_color).italic()
 PRESS_ENTER_MESSAGE             = Text("(Press enter to continue...)", color=program_messages_color).italic()
-TERMINATING_PROGRAM_MESSAGE     = Text("(Exiting the program...)", color=program_messages_color).bold_italic()
+TERMINATING_PROGRAM_MESSAGE     = Text("(Terminating the program...)", color=program_messages_color).bold_italic()
 
 ## error messages
 DATABASE_CONNECTION_ERROR   = Text('⚠️ Error connecting to database: ', color=error_color).bold()
@@ -132,27 +134,3 @@ TASK_TITLE_ERROR            = Text('🚫 Task title cannot be empty.')
 TASK_NOT_FOUND_ERROR        = Text('🚫 Invalid task index. Task not found.')
 INVALID_CHOICE_MESSAGE      = Text('🚫 Invalid choice. Please select a valid option.')
 
-# def database_connection_error(error):
-#     message = f"Error connecting to database: {error}"
-#     logging.info(f"Called database_connection_error function. Message: {message}")
-#     return message
-
-# def error_message():
-#     message = "⚠️ An error occurred."
-#     logging.info(f"Called error_message function. Message: {message}")
-#     return message
-
-# def task_title_error():
-#     message = "🚫 Task title cannot be empty."
-#     logging.info(f"Called task_title_error function. Message: {message}")
-#     return message
-
-# def task_not_found_error():
-#     message = "🚫 Invalid task index. Task not found."
-#     logging.info(f"Called task_not_found_error function. Message: {message}")
-#     return message
-
-# def invalid_choice_message():
-#     message = "Invalid choice. Please select a valid option."
-#     logging.info(f"Called invalid_choice_message function. Message: {message}")
-#     return message
