@@ -99,6 +99,7 @@ class TaskManager:
             raise ValueError(messages.TASK_TITLE_ERROR)
         self.session.add(Task(title=title, description=description, parent_id=get_task.id if get_task else None))
         self.session.commit()
+        print(messages.TASK_ADDED_MESSAGE.format(title=title))
     
     def view_task(self, task):
         status = app_icons.get('COMPLETED') if task.is_completed else app_icons.get('NOT_COMPLETED')

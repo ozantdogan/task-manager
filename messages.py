@@ -1,8 +1,16 @@
-from app_settings import Text, app_commands, colors, styles
+from app_settings import Text, app_icons, app_commands, colors, styles
 import time
 from colorama import init
 
 init(autoreset=True)
+
+add_icon = app_icons.get('ADD')
+edit_icon = app_icons.get('EDIT')
+mark_icon = app_icons.get('MARK')
+delete_icon = app_icons.get('DELETE')
+error_icon = app_icons.get('ERROR')
+not_found_icon = app_icons.get('NOT_FOUND')
+
 
 welcome_message_color = colors.get('welcome_message_color')
 task_manager_title_color = colors.get('task_manager_title_color')
@@ -91,14 +99,13 @@ ENTER_VIEW_TASK_MESSAGE                 = input_messages_color + "Enter task ind
 CONFIRM_EXIT_MESSAGE                    = Text("Are you sure you want to exit the program (Y/n): ", color=confirm_exit_color).underline()
 
 ## task messages
-TASK_ADDED_MESSAGE                      = task_messages_color + "➕ Task '{title}' added."
-TASK_EDITED_MESSAGE                     = task_messages_color + "✏️ Task '{title}' edited."
-TASK_MARKED_MESSAGE                     = task_messages_color + "✔️ Task '{title}' marked as '{is_completed}'."
-ALL_TASKS_MARKED_COMPLETED_MESSAGE      = task_messages_color + "✔️ All tasks marked as completed."
-ALL_TASKS_MARKED_NOT_COMPLETED_MESSAGE  = task_messages_color + "✔️ All tasks marked as 'not completed'."
-TASK_DELETED_MESSAGE                    = task_messages_color + "🗑️ Task '{deleted_task}' deleted."
-ALL_TASKS_DELETED_MESSAGE               = task_messages_color + "🗑️ All tasks deleted."
-TASKS_SORTED_MESSAGE                    = task_messages_color + "🔀 Task index changed from {old_index} to {new_index}."
+TASK_ADDED_MESSAGE                      = task_messages_color + f"{add_icon} Task '{{title}}' added."
+TASK_EDITED_MESSAGE                     = task_messages_color + f"{edit_icon} Task '{{title}}' edited."
+TASK_MARKED_MESSAGE                     = task_messages_color + f"{mark_icon} Task '{{title}}' marked as '{{is_completed}}'."
+ALL_TASKS_MARKED_COMPLETED_MESSAGE      = task_messages_color + f"{mark_icon} All tasks marked as completed."
+ALL_TASKS_MARKED_NOT_COMPLETED_MESSAGE  = task_messages_color + f"{mark_icon} All tasks marked as 'not completed'."
+TASK_DELETED_MESSAGE                    = task_messages_color + f"{delete_icon} Task '{{deleted_task}}' deleted."
+ALL_TASKS_DELETED_MESSAGE               = task_messages_color + f"{delete_icon} All tasks deleted."
 
 ## input messages (subtasks)
 ENTER_SUBTASK_TITLE_MESSAGE             = subtask_input_messages_color + "Enter subtask title (cannot be null): "
@@ -112,11 +119,11 @@ ENTER_VIEW_SUBTASK_MESSAGE              = subtask_input_messages_color + "Enter 
 ENTER_SORT_SUBTASKS_MESSAGE             = subtask_input_messages_color + "Enter sort option: "
 
 ##subtask messages
-SUBTASK_ADDED_MESSAGE                   = subtask_messages_color + "➕ Subtask '{title}' added."
-SUBTASK_EDITED_MESSAGE                  = subtask_messages_color + "✏️ Subtask '{title}' edited."
-SUBTASK_MARKED_MESSAGE                  = subtask_messages_color + "✔️ Subtask '{title}' marked as '{is_completed}'."
-SUBTASK_DELETED_MESSAGE                 = subtask_messages_color + "🗑️ Subtask '{deleted_subtask}' deleted."
-ALL_SUBTASKS_DELETED_MESSAGE            = subtask_messages_color + "🗑️ All subtasks deleted."
+SUBTASK_ADDED_MESSAGE                   = subtask_messages_color + f"{add_icon} Subtask '{{title}}' added."
+SUBTASK_EDITED_MESSAGE                  = subtask_messages_color + f"{edit_icon} Subtask '{{title}}' edited."
+SUBTASK_MARKED_MESSAGE                  = subtask_messages_color + f"{mark_icon} Subtask '{{title}}' marked as '{{is_completed}}'."
+SUBTASK_DELETED_MESSAGE                 = subtask_messages_color + f"{delete_icon} Subtask '{{deleted_task}}' deleted."
+ALL_SUBTASKS_DELETED_MESSAGE            = subtask_messages_color + f"{delete_icon} All subtasks deleted."
 
 ## program messages
 SUBTASKS_MESSAGE                = Text("Subtasks:", color=program_messages_color).bold()
@@ -128,9 +135,8 @@ PRESS_ENTER_MESSAGE             = Text("(Press enter to continue...)", color=pro
 TERMINATING_PROGRAM_MESSAGE     = Text("(Terminating the program...)", color=program_messages_color).bold_italic()
 
 ## error messages
-DATABASE_CONNECTION_ERROR   = Text('⚠️ Error connecting to database: ', color=error_color).bold()
-ERROR_MESSAGE               = Text('⚠️ An error occured: ', color=error_color).bold()
-TASK_TITLE_ERROR            = Text('🚫 Task title cannot be empty.')
-TASK_NOT_FOUND_ERROR        = Text('🚫 Invalid task index. Task not found.')
-INVALID_CHOICE_MESSAGE      = Text('🚫 Invalid choice. Please select a valid option.')
+ERROR_MESSAGE               = Text(f'{error_icon} An error occured: ', color=error_color).bold()
+TASK_TITLE_ERROR            = Text(f'{not_found_icon} Task title cannot be empty.')
+TASK_NOT_FOUND_ERROR        = Text(f'{not_found_icon} Invalid task index. Task not found.')
+INVALID_CHOICE_MESSAGE      = Text(f'{not_found_icon} Invalid choice. Please select a valid option.')
 

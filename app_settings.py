@@ -4,7 +4,13 @@ from colorama import Fore, Back, Style, init
 #
 app_icons = {
     'COMPLETED': '☑️',
-    'NOT_COMPLETED': '🔳'
+    'NOT_COMPLETED': '🔳',
+    'ADD': '➕',
+    'EDIT': '✏️',
+    'MARK': '✔️',
+    'DELETE': '🗑️',
+    'ERROR': '⚠️',
+    'NOT_FOUND': '🚫'
 }
 
 #Commands
