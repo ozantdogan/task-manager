@@ -54,6 +54,9 @@ class TaskManager:
         
     def get_subtask_count(self, task):
         return self.session.query(Task).filter(Task.parent_id == task.id).count()
+        
+    def get_db_name(self):
+        return self.session.bind.url.database
     
     def list_tasks(self, parent_id=None, level=0):
         tasks = self.session.query(Task).filter(Task.parent_id == parent_id).order_by(self.task_sort_order(self.task_sortby)).all()
@@ -256,15 +259,11 @@ class TaskManager:
                     self.delete_all_subtasks(task)
                     self.session.delete(task)
                     self.session.commit()
-                else:
-                    self.session.delete(task)
-                    self.session.commit()
-            print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
-        
+                    print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
+
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
-    
-    #TODO: if 'ALL' entered as an input then delete all the subtasks of the task 
+        
     def delete_subtask(self, get_task=None):
         print(messages.ENTER_DELETE_SUBTASK_MESSAGE)
         subtask = self.get_task(commands=True, get_task=get_task)
@@ -283,7 +282,6 @@ class TaskManager:
             self.session.commit()
             print(messages.TASK_DELETED_MESSAGE.format(deleted_task=subtask.title))
         
-
     def delete_all_subtasks(self, task):
         subtasks = self.session.query(Task).filter(Task.parent_id == task.id).all()
         if subtasks:
