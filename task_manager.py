@@ -260,6 +260,10 @@ class TaskManager:
                     self.session.delete(task)
                     self.session.commit()
                     print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
+            else:
+                self.session.delete(task)
+                self.session.commit()
+                print(messages.TASK_DELETED_MESSAGE.format(deleted_task=task.title))
 
         else:
             raise ValueError(messages.INVALID_CHOICE_MESSAGE)
