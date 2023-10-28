@@ -11,13 +11,12 @@ class Menu:
         self.subtask_buttons = {}
         self.exit_buttons = {}
         self.selected_task = None
-        self.disconnect = False
+        self.exit = False
 
     def show_menu(self):
         while True:
             try:
                 os.system("cls")
-                print(messages.TASK_MANAGER_TITLE.format(DB_NAME=self.task_manager.get_db_name()) + '\n')
 
                 if self.view == 'list':
                     self.list_view()
@@ -25,7 +24,7 @@ class Menu:
                     self.task_view()
                 print("")
                 self.buttons_menu()
-                print(messages.EXIT_PROGRAM)
+                print(messages.TERMINATE_PROGRAM)
                 selected_index = input()
 
                 if selected_index.isdigit():
@@ -88,18 +87,15 @@ class Menu:
                                 self.view = 'list'
                                 self.selected_task = None
 
-                        elif choice == messages.DISCONNECT_PROGRAM:
-                            print(messages.CONFIRM_DISCONNECT_MESSAGE)
+                        elif choice == messages.EXIT:
+                            print(messages.CONFIRM_EXIT_MESSAGE)
                             confirm = input()
                             if confirm.lower() == 'y':
-                                print(messages.DISCONNECT_MESSAGE)
-                                time.sleep(0.5)
-                                os.system("cls")
-                                self.disconnect = True
-                                return 0
+                                self.exit = True
+                                break
                             else:
                                 pass
-                        
+
                         if choice == messages.VIEW_TASK or choice == messages.VIEW_SUBTASK or choice == messages.BACK:
                             pass
                         else:
@@ -141,7 +137,7 @@ class Menu:
             if task_count > 1:
                 i += 1
                 self.task_buttons[i] = messages.SORT_TASKS
-            self.exit_buttons[0] = messages.DISCONNECT_PROGRAM
+            self.exit_buttons[0] = messages.EXIT
             
         elif self.view == 'task':
             

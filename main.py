@@ -12,19 +12,15 @@ def main():
     
     while True:
         try:
-            if check_db_initials() == False:
-                set_db()
             session = connect_db()
             task_manager = TaskManager(session)
             menu = Menu(task_manager)
             menu.show_menu()
-            if(menu.disconnect==True):
-                if session:
-                    session.close()
-                del menu
-                del task_manager
-                
-                set_db()
+            if menu.exit:
+                print(messages.EXIT_PROGRAM_MESSAGE)
+                time.sleep(0.5)
+                os.system("cls")
+                exit()
 
         except KeyboardInterrupt:
             print(messages.TERMINATING_PROGRAM_MESSAGE)

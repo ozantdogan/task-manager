@@ -54,9 +54,6 @@ class TaskManager:
         
     def get_subtask_count(self, task):
         return self.session.query(Task).filter(Task.parent_id == task.id).count()
-        
-    def get_db_name(self):
-        return self.session.bind.url.database
     
     def list_tasks(self, parent_id=None, level=0):
         tasks = self.session.query(Task).filter(Task.parent_id == parent_id).order_by(self.task_sort_order(self.task_sortby)).all()
