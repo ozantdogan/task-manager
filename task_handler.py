@@ -349,9 +349,10 @@ class TaskHandler:
             print(messages.CONFIRM_DELETE_ALL_SUBTASKS_MESSAGES)
             confirm = input()
             if confirm.lower() == "y":
-                get_task = self.get_task(get_task=get_task)
                 self.delete_all_subtasks(get_task)
+                self.session.commit()
                 print(messages.ALL_SUBTASKS_DELETED_MESSAGE)
+
 
         else:
             self.delete_all_subtasks(subtask)

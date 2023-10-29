@@ -93,7 +93,6 @@ ENTER_MARK_TASK_MESSAGE                 = input_messages_color + f"Enter task in
 ENTER_DELETE_TASK_MESSAGE               = input_messages_color + f"Enter task index to delete (Type {app_commands.get('ALL')} to delete all): "
 CONFIRM_DELETE_IF_HAS_SUBTASKS_MESSAGE  = input_messages_color + "Are you sure you want to delete this task? All subtasks will be deleted in progress. (Y/n): "
 CONFIRM_DELETE_ALL_TASKS_MESSAGE        = input_messages_color + "Are you sure you want to delete all tasks? (Y/n): "
-CONFIRM_DELETE_ALL_SUBTASKS_MESSAGES    = input_messages_color + "Are you sure you want to delete all subtasks? (Y/n): "
 ENTER_SORT_TASKS_MESSAGE                = input_messages_color + "Enter sort option: "
 ENTER_VIEW_TASK_MESSAGE                 = input_messages_color + "Enter task index to view: "
 CONFIRM_EXIT_MESSAGE                    = Text("Are you sure you want to exit the program (Y/n): ", color=confirm_exit_color).underline()
@@ -115,6 +114,7 @@ ENTER_NEW_SUBTASK_TITLE_MESSAGE         = subtask_input_messages_color + "Enter 
 ENTER_NEW_SUBTASK_DESCRIPTION_MESSAGE   = subtask_input_messages_color + f"Enter new subtask description (Type {app_commands.get('CLEAR')} to clear description): "
 ENTER_MARK_SUBTASK_MESSAGE              = subtask_input_messages_color + f"Enter subtask index to mark: "
 ENTER_DELETE_SUBTASK_MESSAGE            = subtask_input_messages_color + f"Enter subtask index to delete (Type {app_commands.get('ALL')} to delete all): "
+CONFIRM_DELETE_ALL_SUBTASKS_MESSAGES    = subtask_input_messages_color + "Are you sure you want to delete all subtasks? (Y/n): "
 ENTER_VIEW_SUBTASK_MESSAGE              = subtask_input_messages_color + "Enter subtask index to view: "
 ENTER_SORT_SUBTASKS_MESSAGE             = subtask_input_messages_color + "Enter sort option: "
 
@@ -124,6 +124,7 @@ SUBTASK_EDITED_MESSAGE                  = subtask_messages_color + f"{edit_icon}
 SUBTASK_MARKED_MESSAGE                  = subtask_messages_color + f"{mark_icon} Subtask '{{title}}' marked as '{{is_completed}}'."
 SUBTASK_DELETED_MESSAGE                 = subtask_messages_color + f"{delete_icon} Subtask '{{deleted_task}}' deleted."
 ALL_SUBTASKS_DELETED_MESSAGE            = subtask_messages_color + f"{delete_icon} All subtasks deleted."
+
 
 ## program messages
 SUBTASKS_MESSAGE                = Text("Subtasks:", color=program_messages_color).bold()
