@@ -5,7 +5,7 @@ import messages
 import textwrap
 
 
-class TaskManager:
+class TaskHandler:
     def __init__(self, session):
         self.task_db_ids = {}
         self.subtask_db_ids = {}

@@ -1,4 +1,4 @@
-from task_manager import TaskManager
+from task_handler import TaskHandler
 from db_settings import *
 from menu import Menu
 import os
@@ -13,8 +13,8 @@ def main():
     while True:
         try:
             session = connect_db()
-            task_manager = TaskManager(session)
-            menu = Menu(task_manager)
+            task_handler = TaskHandler(session)
+            menu = Menu(task_handler)
             menu.show_menu()
             if menu.exit:
                 print(messages.EXIT_PROGRAM_MESSAGE)

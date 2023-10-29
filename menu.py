@@ -25,7 +25,6 @@ class Menu:
                     self.task_view()
                 print("")
                 self.buttons_menu()
-                print(messages.TERMINATE_PROGRAM)
                 selected_index = input()
 
                 if selected_index.isdigit():
