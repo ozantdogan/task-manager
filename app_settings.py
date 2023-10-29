@@ -49,7 +49,7 @@ colors = {
     'task_manager_title_color': Fore.BLACK + Back.LIGHTMAGENTA_EX,
     'input_selection_color': Fore.LIGHTYELLOW_EX,
     'subtask_selection_color': Fore.LIGHTCYAN_EX,
-    'exit_program_color': Fore.WHITE,
+    'exit_program_color': Fore.LIGHTMAGENTA_EX,
     'input_messages_color': Fore.YELLOW,
     'subtask_input_messages_color': Fore.CYAN,
     'subtask_messages_color': Fore.LIGHTMAGENTA_EX,
