@@ -4,9 +4,13 @@ from models import Base
 import os
 import messages
 
-DATABASE_PATH = os.path.join(os.path.dirname(__file__), 'database')
+DATABASE_PATH = os.path.join(os.path.dirname(__file__), "database")
 os.makedirs(DATABASE_PATH, exist_ok=True)
-DATABASE_URI = os.environ.get('DATABASE_URI') or f'sqlite:///{os.path.join(DATABASE_PATH, "tasks.db")}'
+DATABASE_URI = (
+    os.environ.get("DATABASE_URI")
+    or f'sqlite:///{os.path.join(DATABASE_PATH, "tasks.db")}'
+)
+
 
 def connect_db():
     try:

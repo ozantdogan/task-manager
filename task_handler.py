@@ -353,7 +353,6 @@ class TaskHandler:
                 self.session.commit()
                 print(messages.ALL_SUBTASKS_DELETED_MESSAGE)
 
-
         else:
             self.delete_all_subtasks(subtask)
             self.session.delete(subtask)

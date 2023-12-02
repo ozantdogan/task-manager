@@ -4,11 +4,13 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+
 def generate_uuid():
     return str(uuid.uuid4())
 
+
 class Task(Base):
-    __tablename__ = 'tasks'
+    __tablename__ = "tasks"
 
     id = Column(String, primary_key=True, default=generate_uuid)
     title = Column(String)

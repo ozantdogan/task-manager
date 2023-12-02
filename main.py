@@ -5,11 +5,12 @@ import os
 import time
 import messages
 
+
 def main():
     os.system("cls")
     messages.welcome_message()
     time.sleep(1.5)
-    
+
     while True:
         try:
             session = connect_db()
@@ -31,6 +32,7 @@ def main():
         except Exception as e:
             os.system("cls")
             continue
-        
+
+
 if __name__ == "__main__":
     main()
