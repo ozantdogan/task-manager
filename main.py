@@ -1,3 +1,4 @@
+from app_settings import clear_console
 from task_handler import TaskHandler
 from db_settings import *
 from menu import Menu
@@ -5,9 +6,8 @@ import os
 import time
 import messages
 
-
 def main():
-    os.system("cls")
+    clear_console()
     messages.welcome_message()
     time.sleep(1.5)
 
@@ -20,17 +20,17 @@ def main():
             if menu.exit:
                 print(messages.EXIT_PROGRAM_MESSAGE)
                 time.sleep(0.5)
-                os.system("cls")
+                clear_console()
                 exit()
 
         except KeyboardInterrupt:
             print(messages.TERMINATING_PROGRAM_MESSAGE)
             time.sleep(0.5)
-            os.system("cls")
+            clear_console()
             exit()
 
         except Exception as e:
-            os.system("cls")
+            clear_console()
             continue
 
 

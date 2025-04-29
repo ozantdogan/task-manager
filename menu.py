@@ -1,7 +1,7 @@
 import os
 import time
+from app_settings import clear_console
 import messages
-
 
 class Menu:
     def __init__(self, task_manager):
@@ -17,7 +17,7 @@ class Menu:
     def show_menu(self):
         while True:
             try:
-                os.system("cls")
+                clear_console()
 
                 if self.view == "list":
                     self.list_view()

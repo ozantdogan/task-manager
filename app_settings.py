@@ -1,4 +1,8 @@
+import os
 from colorama import Fore, Back, Style, init
+
+def clear_console():
+    os.system("cls" if os.name == "nt" else "clear")
 
 #Completed task status
 #
